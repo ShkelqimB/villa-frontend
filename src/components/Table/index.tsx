@@ -128,7 +128,7 @@ const CreateDialog = ({ open, setOpen, expenses, setExpenses }: any) => {
         const { data } = await api.createExpense(values);
         if (data) {
             setExpenses((prev: Expense[]) => [...prev, data]);
-            setOpen({ ...open, update: false });
+            setOpen({ ...open, create: false });
         } else {
             console.log("ERROR deleting expense; ", data);
         }

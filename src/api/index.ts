@@ -1,5 +1,7 @@
 import axios from "axios";
 import { Expense } from "../interfaces/expense.interface";
+import { User } from "../interfaces/user.interface";
+import { Villa } from "../interfaces/villa.interface";
 
 const baseAPI = `http://localhost:5000/api/`;
 
@@ -9,14 +11,14 @@ export default {
     getAllVillas: () => axios.get(`${baseAPI}villa`),
     getVillaById: (id: number) => axios.get(`${baseAPI}villa/${id}`),
     createVilla: (values: any) => axios.post(`${baseAPI}villa`, values),
-    updateVilla: (id: number, values: any) => axios.put(`${baseAPI}villa/${id}`, values),
+    updateVilla: (values: Villa) => axios.put(`${baseAPI}villa/${values.id}`, values),
     removeVilla: (id: number) => axios.delete(`${baseAPI}villa/${id}`),
     //#endregion
     //#region User API
     getAllUsers: () => axios.get(`${baseAPI}user`),
     getUserById: (id: number) => axios.get(`${baseAPI}user/${id}`),
     createUser: (values: any) => axios.post(`${baseAPI}user`, values),
-    updateUser: (id: number, values: any) => axios.put(`${baseAPI}user/${id}`, values),
+    updateUser: (values: User) => axios.put(`${baseAPI}user/${values.id}`, values),
     removeUser: (id: number) => axios.delete(`${baseAPI}user/${id}`),
     //#endregion
     //#region Expense API
