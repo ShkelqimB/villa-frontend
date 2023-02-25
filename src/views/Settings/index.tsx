@@ -1,10 +1,77 @@
-import React from "react";
-import { useAuth } from "../../context/AuthProvider";
+import React, { useState } from "react";
+import { Typography, Divider, Button, TextField } from "@mui/material";
+import api from "../../api";
+import { User } from "../../interfaces/user.interface";
 
-const Settings = () => {
-    const { isAuthenticated } = useAuth();
-    console.log("🚀 ~ file: index.tsx:6 ~ Settings ~ isAuthenticated:", isAuthenticated);
-    return <div>Settings</div>;
+export const Settings = () => {
+    const [view, setView] = useState(true);
+    const [values, setValues] = useState<User>({
+        id: +"",
+        email: "",
+        full_name: "",
+        phone: "",
+        age: +"",
+        role: +"",
+        password: "",
+    });
+
+    const handleChange = (event: { persist: () => void; target: { name: any; value: any } }) => {
+        event.persist();
+        setValues((values) => ({
+            ...values,
+            [event.target.name]: event.target.value,
+        }));
+    };
+
+    const getUser = async () => {
+        const user = await api.getUserByToken();
+        setValues({
+            id: user.data.id,
+            email: user.data.email,
+            full_name: user.data.full_name,
+            phone: user.data.phone,
+            age: user.data.age,
+            role: user.data.role,
+            password: user.data.password,
+        });
+    };
+
+    const updateUser = async () => {
+        await api.updateUser(values);
+        setView(true);
+    };
+
+    React.useEffect(() => {
+        getUser();
+    }, []);
+
+    return (
+        <div style={{ width: 500 }}>
+            <Typography variant="h5">Settings</Typography>
+            <Divider />
+            <TextField id="full_name" label="Full Name" type="text" name="full_name" variant="outlined" onChange={handleChange} value={values?.full_name} disabled={view || false} />
+            <TextField id="email" label="Email" type="email" name="email" variant="outlined" onChange={handleChange} value={values?.email} disabled={view || false} />
+            <TextField id="age" label="Age" type="number" name="age" variant="outlined" onChange={handleChange} value={values?.age} disabled={view || false} />
+            <TextField id="phone" label="Phone" type="tel" name="phone" variant="outlined" onChange={handleChange} value={values?.phone} disabled={view || false} />
+            <TextField id="role" label="Role" type="text" name="role" variant="outlined" onChange={handleChange} value={values?.role} disabled={view || false} />
+            <TextField id="password" label="Password" type="password" name="password" variant="outlined" onChange={handleChange} value={values?.password} disabled={view || false} />
+
+            {view ? (
+                <Button variant="contained" color="primary" onClick={() => setView(false)}>
+                    Update
+                </Button>
+            ) : (
+                <>
+                    <Button variant="contained" color="primary" onClick={() => updateUser()}>
+                        Save Settings
+                    </Button>
+                    <Button variant="contained" color="error" onClick={() => setView(true)}>
+                        Cancel
+                    </Button>
+                </>
+            )}
+        </div>
+    );
 };
 
 export default Settings;

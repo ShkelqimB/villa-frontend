@@ -20,6 +20,7 @@ export default {
     //#endregion
     //#region User API
     getAllUsers: () => axios.get(`${baseAPI}user`),
+    getUserByToken: () => axios.get(`${baseAPI}user/me`, { withCredentials: true }),
     getUserById: (id: number) => axios.get(`${baseAPI}user/${id}`),
     createUser: (values: any) => axios.post(`${baseAPI}user`, values),
     updateUser: (values: User) => axios.put(`${baseAPI}user/${values.id}`, values),
