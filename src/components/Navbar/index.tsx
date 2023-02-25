@@ -14,12 +14,16 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { redirect, useNavigate } from "react-router-dom";
 import routes from "../../routes/routes";
+import { useAuth } from "../../context/AuthProvider";
+import api from "../../api";
 
 const pages = ["Clients", "Bookings", "Calendar", "House", "Expenses", "Income"];
 
 const Navbar = ({ isLoggedIn }: any) => {
+    const { logout } = useAuth();
     const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -27,6 +31,14 @@ const Navbar = ({ isLoggedIn }: any) => {
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElNav(null);
+    };
+
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElUser(event.currentTarget);
     };
 
     const LogoRedirect = () => {
@@ -37,6 +49,13 @@ const Navbar = ({ isLoggedIn }: any) => {
         console.log("🚀 ~ file: index.tsx:36 ~ LinkRedirect ~ path", path);
         setAnchorElNav(null);
         navigate(path);
+    };
+
+    const handleLogout = async () => {
+        const isLoggedOut = await api.logout();
+        if (isLoggedOut) {
+            logout();
+        }
     };
 
     return (
@@ -116,20 +135,15 @@ const Navbar = ({ isLoggedIn }: any) => {
                                     {res.name}
                                 </Button>
                             ))}
-                            {/* {pages.map((page) => (
-                                <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
-                                    {page}
-                                </Button>
-                            ))} */}
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
-                                <IconButton onClick={() => console.log("KIMI")} sx={{ p: 0 }}>
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                     <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                                 </IconButton>
                             </Tooltip>
-                            {/* <Menu
+                            <Menu
                                 sx={{ mt: "45px" }}
                                 id="menu-appbar"
                                 anchorEl={anchorElUser}
@@ -145,12 +159,10 @@ const Navbar = ({ isLoggedIn }: any) => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">{setting}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu> */}
+                                <MenuItem onClick={() => handleLogout()}>
+                                    <Typography textAlign="center">Logout</Typography>
+                                </MenuItem>
+                            </Menu>
                         </Box>
                     </>
                 </Toolbar>

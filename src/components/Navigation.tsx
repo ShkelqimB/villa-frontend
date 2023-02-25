@@ -5,12 +5,13 @@ import routes from "../routes/routes";
 import LandingScreen from "../views/LandingScreen";
 import NoMatch from "./NoMatch";
 import Navbar from "./Navbar";
+import { useAuth } from "../context/AuthProvider";
 
 const Navigation = () => {
-    const isLogged = localStorage.getItem("isLoggedIn");
+    const { isAuthenticated } = useAuth();
     return (
         <>
-            {isLogged === "true" || isLogged ? (
+            {isAuthenticated ? (
                 <>
                     <Navbar />
                     <Routes>
@@ -18,8 +19,8 @@ const Navigation = () => {
                             const Element = prop.component;
                             return <Route path={prop.path} key={key} element={<Element />} />;
                         })}
+                        <Route path="/" element={<Navigate to="/home" replace />} />
                         {/* <Navigate from="/" to={"/home"} /> */}
-                        <Route path="/" element={<Navigate replace to="/home" />} />
                         {/* <Route path={"/"} element={routes.AdminRoutes[routes.AdminRoutes.length - 1].component} /> */}
                         <Route path="*" element={<NoMatch />} />
                     </Routes>

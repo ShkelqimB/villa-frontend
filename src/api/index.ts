@@ -7,6 +7,10 @@ const baseAPI = `http://localhost:5000/api/`;
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
+    //#region Auth
+    login: (values: any) => axios.post(`${baseAPI}authentication/login`, values, { withCredentials: true }),
+    logout: () => axios.post(`${baseAPI}authentication/logout`, null, { withCredentials: true }),
+    //#endregion
     //#region Villa API
     getAllVillas: () => axios.get(`${baseAPI}villa`),
     getVillaById: (id: number) => axios.get(`${baseAPI}villa/${id}`),
