@@ -53,7 +53,7 @@ const Villas = () => {
                             <Grid item xs={3}>
                                 <Button
                                     variant="contained"
-                                    color="success"
+                                    color="primary"
                                     style={{ width: 200, margin: 5 }}
                                     onClick={() => {
                                         setOpenPopUp({ ...openPopUp, update: true });
@@ -64,7 +64,7 @@ const Villas = () => {
                                 </Button>
                                 <Button
                                     variant="contained"
-                                    color="error"
+                                    color="primary"
                                     style={{ width: 200, margin: 5 }}
                                     onClick={() => {
                                         setOpenPopUp({ ...openPopUp, delete: true });

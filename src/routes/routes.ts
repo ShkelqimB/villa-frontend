@@ -4,6 +4,8 @@ import Expenses from '../views/Expenses';
 import Users from '../views/Users';
 import Villas from '../views/Villas';
 import Settings from '../views/Settings';
+import Booking from '../views/Booking';
+import Calendars from '../views/Calendar';
 
 // Icons
 // import DevicesIcon from 'assets/deviceIcon.svg';
@@ -24,10 +26,30 @@ const AdminLinks = [
     roles: ['0', '1', '2'],
   },
   {
+    path: '/booking',
+    name: 'Booking',
+    component: Booking,
+    value: 2,
+    // color: silicaColors.icons.home,
+    // icon: HomeIcon,
+    default: '/booking',
+    roles: ['0', '1', '2'],
+  },
+  {
+    path: '/calendar',
+    name: 'Calendar',
+    component: Calendars,
+    value: 3,
+    // color: silicaColors.icons.home,
+    // icon: HomeIcon,
+    default: '/calendar',
+    roles: ['0', '1', '2'],
+  },
+  {
     path: '/villa',
     name: 'Villas',
     component: Villas,
-    value: 2,
+    value: 4,
     // color: silicaColors.icons.devices,
     // icon: DevicesIcon,
     default: '/villa',
@@ -37,7 +59,7 @@ const AdminLinks = [
     path: '/expenses',
     name: 'Expenses',
     component: Expenses,
-    value: 3,
+    value: 5,
     // color: silicaColors.icons.devices,
     // icon: DevicesIcon,
     default: '/expenses',
@@ -47,7 +69,7 @@ const AdminLinks = [
     path: '/users',
     name: 'Users',
     component: Users,
-    value: 4,
+    value: 6,
     // color: silicaColors.icons.users,
     // icon: UsersIcon,
     default: '/users',
@@ -57,7 +79,7 @@ const AdminLinks = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
-    value: 4,
+    value: 7,
     // color: silicaColors.icons.users,
     // icon: UsersIcon,
     default: '/settings',
@@ -70,6 +92,16 @@ const AdminRoutes = [
     path: '/home',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/booking',
+    name: 'Booking',
+    component: Booking,
+  },
+  {
+    path: '/calendar',
+    name: 'Calendar',
+    component: Calendars,
   },
   {
     path: '/villa',
