@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Divider, Button, TextField } from "@mui/material";
+import { Typography, Divider, Button, TextField, Grid } from "@mui/material";
 import api from "../../api";
 import { User } from "../../interfaces/user.interface";
 
@@ -46,30 +46,58 @@ export const Settings = () => {
     }, []);
 
     return (
-        <div style={{ width: 500 }}>
-            <Typography variant="h5">Settings</Typography>
+        <div>
+            <Typography variant="h4">Settings</Typography>
             <Divider />
-            <TextField id="full_name" label="Full Name" type="text" name="full_name" variant="outlined" onChange={handleChange} value={values?.full_name} disabled={view || false} />
-            <TextField id="email" label="Email" type="email" name="email" variant="outlined" onChange={handleChange} value={values?.email} disabled={view || false} />
-            <TextField id="age" label="Age" type="number" name="age" variant="outlined" onChange={handleChange} value={values?.age} disabled={view || false} />
-            <TextField id="phone" label="Phone" type="tel" name="phone" variant="outlined" onChange={handleChange} value={values?.phone} disabled={view || false} />
-            <TextField id="role" label="Role" type="text" name="role" variant="outlined" onChange={handleChange} value={values?.role} disabled={view || false} />
-            <TextField id="password" label="Password" type="password" name="password" variant="outlined" onChange={handleChange} value={values?.password} disabled={view || false} />
-
-            {view ? (
-                <Button variant="contained" color="primary" onClick={() => setView(false)}>
-                    Update
-                </Button>
-            ) : (
-                <>
-                    <Button variant="contained" color="primary" onClick={() => updateUser()}>
-                        Save Settings
+            <Grid container spacing={2} direction="column" style={{ marginTop: "5%", margin: "auto", textAlign: "center", alignItems: "center" }}>
+                <Grid xs={12} md={12}>
+                    <TextField
+                        style={{ margin: 10 }}
+                        id="full_name"
+                        label="Full Name"
+                        type="text"
+                        name="full_name"
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={values?.full_name}
+                        disabled={view || false}
+                    />
+                    <TextField style={{ margin: 10 }} id="email" label="Email" type="email" name="email" variant="outlined" onChange={handleChange} value={values?.email} disabled={view || false} />
+                </Grid>
+                <Grid xs={12} md={12}>
+                    <TextField style={{ margin: 10 }} id="age" label="Age" type="number" name="age" variant="outlined" onChange={handleChange} value={values?.age} disabled={view || false} />
+                    <TextField style={{ margin: 10 }} id="phone" label="Phone" type="tel" name="phone" variant="outlined" onChange={handleChange} value={values?.phone} disabled={view || false} />
+                </Grid>
+                <Grid xs={12} md={12}>
+                    {" "}
+                    <TextField style={{ margin: 10 }} id="role" label="Role" type="text" name="role" variant="outlined" onChange={handleChange} value={values?.role} disabled={view || false} />
+                    <TextField
+                        style={{ margin: 10 }}
+                        id="password"
+                        label="Password"
+                        type="password"
+                        name="password"
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={values?.password}
+                        disabled={view || false}
+                    />
+                </Grid>
+                {view ? (
+                    <Button variant="contained" color="primary" onClick={() => setView(false)}>
+                        Update
                     </Button>
-                    <Button variant="contained" color="error" onClick={() => setView(true)}>
-                        Cancel
-                    </Button>
-                </>
-            )}
+                ) : (
+                    <>
+                        <Button variant="contained" color="primary" onClick={() => updateUser()}>
+                            Save Settings
+                        </Button>
+                        <Button variant="contained" color="error" onClick={() => setView(true)}>
+                            Cancel
+                        </Button>
+                    </>
+                )}
+            </Grid>
         </div>
     );
 };

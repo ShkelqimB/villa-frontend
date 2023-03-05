@@ -8,7 +8,6 @@ import {
     DialogTitle,
     Fab,
     IconButton,
-    Paper,
     Table,
     TableBody,
     TableCell,
@@ -29,7 +28,7 @@ import { User } from "../../interfaces/user.interface";
 function TableToolbar({ openPopUp, setOpenPopUp }: any) {
     return (
         <Toolbar sx={{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }}>
-            <Typography sx={{ flex: "1 1 100%" }} variant="h6" id="tableTitle" component="div">
+            <Typography sx={{ flex: "1 1 100%" }} variant="h4" id="tableTitle" component="div">
                 Users
             </Typography>
             <Fab color="primary" aria-label="add" variant="extended" onClick={() => setOpenPopUp({ ...openPopUp, create: true })}>
@@ -59,7 +58,7 @@ const Users = () => {
             <UpdateDialog open={openPopUp} setOpen={setOpenPopUp} users={users} setUsers={setUsers} updatedObj={updatedObj} setUpdatedObj={setUpdatedObj} />
             <DeleteDialog open={openPopUp} setOpen={setOpenPopUp} deleteObj={deleteObj} users={users} setUsers={setUsers} />
             <TableToolbar openPopUp={openPopUp} setOpenPopUp={setOpenPopUp} />
-            <TableContainer component={Paper}>
+            <TableContainer>
                 <Table sx={{ minWidth: 650, marginRight: "auto", marginLeft: "auto", width: "90%" }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
