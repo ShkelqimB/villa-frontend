@@ -26,6 +26,7 @@ import api from "../../api";
 import { Expense } from "../../interfaces/expense.interface";
 import { useEffect, useState } from "react";
 import { Roll_Payment } from "../../interfaces/rollPayment.interface";
+import moment from "moment";
 
 function TableToolbar({ openPopUp, setOpenPopUp }: any) {
     return (
@@ -59,12 +60,13 @@ const CustomTable = (props: any) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Amount</TableCell>
-                                <TableCell align="right">Guests</TableCell>
-                                <TableCell align="right">Checkin</TableCell>
-                                <TableCell align="right">Checkout</TableCell>
-                                <TableCell align="right">Client Id</TableCell>
-                                <TableCell align="right">Villa Id</TableCell>
-                                <TableCell align="right">Action</TableCell>
+                                <TableCell>Guest</TableCell>
+                                <TableCell>Guests</TableCell>
+                                <TableCell>Checkin</TableCell>
+                                <TableCell>Checkout</TableCell>
+                                <TableCell>Client Id</TableCell>
+                                <TableCell>Villa Id</TableCell>
+                                <TableCell></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -74,12 +76,13 @@ const CustomTable = (props: any) => {
                                         <TableCell component="th" scope="row">
                                             {row.amount}
                                         </TableCell>
-                                        <TableCell align="right">{row.guests}</TableCell>
-                                        <TableCell align="right">{row.checkin}</TableCell>
-                                        <TableCell align="right">{row.checkout}</TableCell>
-                                        <TableCell align="right">{row.client.id}</TableCell>
-                                        <TableCell align="right">{row.villa.id}</TableCell>
-                                        <TableCell align="right">
+                                        <TableCell>{row.client.full_name}</TableCell>
+                                        <TableCell>{row.guests}</TableCell>
+                                        <TableCell>{moment(row.checkin).format("MMMM Do YYYY, h:mm:ss a")}</TableCell>
+                                        <TableCell>{moment(row.checkout).format("MMMM Do YYYY, h:mm:ss a")}</TableCell>
+                                        <TableCell>{row.client.id}</TableCell>
+                                        <TableCell>{row.villa.id}</TableCell>
+                                        <TableCell>
                                             <Tooltip title="Delete">
                                                 <IconButton
                                                     onClick={() => {

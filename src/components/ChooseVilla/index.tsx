@@ -3,7 +3,7 @@ import { Grid, Typography } from "@mui/material";
 import api from "../../api";
 import { Villa } from "../../interfaces/villa.interface";
 
-const ChooseVilla = (fullValues: any, setFullValues: any) => {
+const ChooseVilla = ({ fullValues, setFullValues }: any) => {
     const [villas, setVillas] = useState([]);
 
     const getVillas = async () => {

@@ -20,7 +20,7 @@ const Calendars = () => {
 
     for (let i in rollPayments) {
         arr.push({
-            title: "Mevlo",
+            title: `${rollPayments[i]?.villa?.name}-${rollPayments[i]?.client?.full_name}`,
             start: rollPayments[i].checkin,
             end: rollPayments[i].checkout,
         });

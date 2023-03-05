@@ -25,6 +25,7 @@ import AddIcon from "@mui/icons-material/Add";
 import api from "../../api";
 import { Expense } from "../../interfaces/expense.interface";
 import { useEffect, useState } from "react";
+import moment from "moment";
 
 function TableToolbar({ openPopUp, setOpenPopUp, expenses, setExpenses }: any) {
     return (
@@ -72,7 +73,7 @@ const CustomTable = (props: any) => {
                                             {row.name}
                                         </TableCell>
                                         <TableCell align="right">{row.description}</TableCell>
-                                        <TableCell align="right">{row.date.toString()}</TableCell>
+                                        <TableCell align="right">{moment(row.date).format("DD/MM/YYYY")}</TableCell>
                                         <TableCell align="right">{row.total}</TableCell>
                                         <TableCell align="right">
                                             <Tooltip title="Delete">

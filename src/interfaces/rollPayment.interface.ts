@@ -17,6 +17,9 @@ export interface Roll_Payment {
     guests: number;
     checkin: string;
     checkout: string;
+    no_prepayment: boolean,
+    deposit: boolean,
+    full_prepayment: boolean,
 
     createdAt: Date;
     updatedAt: Date;
@@ -31,6 +34,9 @@ export interface Client_RollPayment {
     guests: number,
     checkin: string,
     checkout: string,
+    no_prepayment: boolean,
+    deposit: boolean,
+    full_prepayment: boolean,
 
     villa: Villa,
     client: Client

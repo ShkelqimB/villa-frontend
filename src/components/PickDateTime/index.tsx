@@ -13,14 +13,14 @@ const PickDateTime = ({ fullValues, setFullValues }: any) => {
     const handleChangeDateCheckin = (newValue: any) => {
         setFullValues((values: any) => ({
             ...values,
-            checkin: newValue,
+            checkin: moment(newValue).format(),
         }));
     };
 
     const handleChangeDateCheckout = (newValue: any) => {
         setFullValues((values: any) => ({
             ...values,
-            checkout: newValue,
+            checkout: moment(newValue).format(),
         }));
     };
 
