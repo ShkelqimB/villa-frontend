@@ -6,6 +6,7 @@ import LandingScreen from "../views/LandingScreen";
 import NoMatch from "./NoMatch";
 import Navbar from "./Navbar";
 import { useAuth } from "../context/AuthProvider";
+import Footbar from "./Footbar";
 
 const Navigation = () => {
     const { isAuthenticated } = useAuth();
@@ -24,6 +25,7 @@ const Navigation = () => {
                         {/* <Route path={"/"} element={routes.AdminRoutes[routes.AdminRoutes.length - 1].component} /> */}
                         <Route path="*" element={<NoMatch />} />
                     </Routes>
+                    <Footbar />
                 </>
             ) : (
                 <Routes>

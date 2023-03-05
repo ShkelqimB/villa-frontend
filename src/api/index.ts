@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Expense } from "../interfaces/expense.interface";
+import { Client_RollPayment } from "../interfaces/rollPayment.interface";
 import { User } from "../interfaces/user.interface";
 import { Villa } from "../interfaces/villa.interface";
 
@@ -28,9 +29,18 @@ export default {
     //#endregion
     //#region Expense API
     getAllExpenses: () => axios.get(`${baseAPI}expense`),
+    getTotal: () => axios.get(`${baseAPI}expense/total`),
     getExpenseById: (id: number) => axios.get(`${baseAPI}expense/${id}`),
     createExpense: (values: any) => axios.post(`${baseAPI}expense`, values),
     updateExpense: (values: Expense) => axios.put(`${baseAPI}expense/${values.id}`, values),
     removeExpense: (id: number) => axios.delete(`${baseAPI}expense/${id}`),
+    //#endregion
+    //#region Expense API
+    getAllRollPayment: () => axios.get(`${baseAPI}rollPayment`),
+    getIncome: () => axios.get(`${baseAPI}rollPayment/income`),
+    getRollPaymentById: (id: number) => axios.get(`${baseAPI}rollPayment/${id}`),
+    createRollPayment: (values: Client_RollPayment) => axios.post(`${baseAPI}rollPayment`, values),
+    updateRollPayment: (values: Client_RollPayment) => axios.put(`${baseAPI}rollPayment/${values.id}`, values),
+    removeRollPayment: (id: number) => axios.delete(`${baseAPI}rollPayment/${id}`),
     //#endregion
 };

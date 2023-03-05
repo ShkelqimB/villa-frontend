@@ -1,30 +1,74 @@
-import { Button, Checkbox, Container, Divider, FormControl, FormControlLabel, Grid, InputAdornment, InputLabel, OutlinedInput, Stack, TextField, Typography } from "@mui/material";
+// REACT
 import { useState, useEffect } from "react";
+// Material UI
+import { Button, Checkbox, Container, Divider, FormControl, FormControlLabel, Grid, InputAdornment, InputLabel, OutlinedInput, TextField, Typography } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import EditIcon from "@mui/icons-material/Edit";
+import moment from "moment";
+
+// Components
+import { Client_RollPayment } from "../../interfaces/rollPayment.interface";
 import api from "../../api";
 import { Villa } from "../../interfaces/villa.interface";
-import { DesktopDatePicker, LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import moment, { Moment } from "moment";
-import EditIcon from "@mui/icons-material/Edit";
+import "./booking.css";
 
 const Booking = () => {
-    const [value, setValue] = useState<Moment | null>(moment("2014-08-18T21:11:54"));
-    const [price, setPrice] = useState<any>();
-    const [editPrice, setEditPrice] = useState(false);
+    const [fullValues, setFullValues] = useState<Client_RollPayment>({
+        id: +"",
+        amount: +"",
+        guests: +"",
+        checkin: "",
+        checkout: "",
+        client: { full_name: "", email: "", phone: "", guests: +"" },
+        villa: { id: +"", name: "", price: +"", guests: +"" },
+    });
 
+    const [editPrice, setEditPrice] = useState(false);
     const [villas, setVillas] = useState([]);
+
     const getVillas = async () => {
         const result = await api.getAllVillas();
-        console.log("🚀 ~ file: index.tsx:8 ~ getVillas ~ result", result.data);
         setVillas(result.data);
     };
 
-    const handleChange = (newValue: Moment | null) => {
-        setValue(newValue);
+    const handleChangeDateCheckin = (newValue: any) => {
+        setFullValues((values) => ({
+            ...values,
+            checkin: newValue,
+        }));
     };
 
-    const handleOnChange = (event: { persist: () => void; target: { name: any; value: any } }) => {
-        setPrice(event.target.value);
+    const handleChangeDateCheckout = (newValue: any) => {
+        setFullValues((values) => ({
+            ...values,
+            checkout: newValue,
+        }));
+    };
+
+    const handleChangeText = (event: { persist: () => void; target: { name: any; value: any } }) => {
+        event.persist();
+        setFullValues((values) => ({
+            ...values,
+            [event.target.name]: event.target.value,
+        }));
+    };
+
+    const handleChangeClient = (event: { persist: () => void; target: { name: any; value: any } }) => {
+        event.persist();
+        setFullValues((values) => ({
+            ...values,
+            client: {
+                ...values.client,
+                [event.target.name]: event.target.value,
+            },
+        }));
+    };
+
+    const handleClickVilla = (value: Villa) => {
+        setFullValues({ ...fullValues, villa: value });
     };
 
     useEffect(() => {
@@ -34,7 +78,7 @@ const Booking = () => {
         <Container maxWidth="lg">
             <Typography variant="h3">Select Villa</Typography>
             <Divider />
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{ marginTop: 10 }}>
                 {villas.length > 0 &&
                     villas.map((row: Villa, index) => {
                         return (
@@ -49,6 +93,7 @@ const Booking = () => {
                                     width: 200,
                                     padding: 20,
                                 }}
+                                onClick={() => handleClickVilla(row)}
                                 key={index}
                             >
                                 <Grid item xs={12}>
@@ -67,76 +112,128 @@ const Booking = () => {
             </Grid>
             <Divider />
             <Typography variant="h3">Select Date</Typography>
-            <Stack direction={"row"}>
-                <Stack spacing={3} margin={"2%"}>
+            <Grid container spacing={3}>
+                <Grid item xs={12} md={4}>
                     <LocalizationProvider dateAdapter={AdapterMoment}>
-                        <DesktopDatePicker
-                            label="From"
-                            inputFormat="MM/DD/YYYY"
-                            value={value}
-                            onChange={handleChange}
-                            renderInput={(params: any) => <TextField {...params} style={{ width: 300 }} />}
-                        />
-                        <DesktopDatePicker label="To" inputFormat="MM/DD/YYYY" value={value} onChange={handleChange} renderInput={(params: any) => <TextField {...params} style={{ width: 300 }} />} />
+                        <DemoContainer components={["DateTimePicker"]}>
+                            <DateTimePicker onChange={handleChangeDateCheckin} value={moment(fullValues.checkin)} label="Checkin Date&Time" format="YYYY-MM-DD HH:mm:ss" />
+                        </DemoContainer>
                     </LocalizationProvider>
-                </Stack>
-                <Stack spacing={3} margin={"2%"}>
+                </Grid>
+                <Grid item xs={12} md={4}>
                     <LocalizationProvider dateAdapter={AdapterMoment}>
-                        <TimePicker label="Time" value={value} onChange={handleChange} renderInput={(params) => <TextField {...params} style={{ width: 300 }} />} />
-                        <TimePicker label="Time" value={value} onChange={handleChange} renderInput={(params) => <TextField {...params} style={{ width: 300 }} />} />
+                        <DemoContainer components={["DateTimePicker"]}>
+                            <DateTimePicker
+                                className="dateTimeMargin"
+                                onChange={handleChangeDateCheckout}
+                                value={moment(fullValues.checkout)}
+                                label="Checkout Date&Time"
+                                format="YYYY-MM-DD HH:mm:ss"
+                            />
+                        </DemoContainer>
                     </LocalizationProvider>
-                </Stack>
-                <Stack
-                    margin={"2%"}
-                    padding="2%"
-                    spacing={2}
-                    direction="row"
-                    style={{ textAlign: "center", alignItems: "center", background: "#FFFFFF 0% 0% no-repeat padding-box", boxShadow: "0px 3px 6px #00000029", borderRadius: 19, opacity: 1 }}
-                >
+                </Grid>
+                <Grid item xs={12} md={4} display="flex">
                     {!editPrice ? (
-                        <>
-                            {/* <Typography variant="h4" fontWeight={"bold"}>
-                                    350
-                                </Typography> */}
+                        <Grid
+                            style={{
+                                textAlign: "center",
+                                width: "100%",
+                                padding: 20,
+                                alignItems: "center",
+                                background: "#FFFFFF 0% 0% no-repeat padding-box",
+                                boxShadow: "0px 3px 6px #00000029",
+                                borderRadius: 19,
+                                opacity: 1,
+                                alignSelf: "center",
+                            }}
+                            container
+                            spacing={2}
+                        >
                             <Typography variant="h4" fontWeight={"bold"} style={{ whiteSpace: "normal" }}>
-                                350 Total Price
+                                {fullValues.villa.price} Total Price
                             </Typography>
                             <Button color="primary" onClick={() => setEditPrice(true)} endIcon={<EditIcon />}>
                                 Edit Price
                             </Button>
-                        </>
+                        </Grid>
                     ) : (
-                        <>
-                            <TextField autoFocus margin="dense" id="name" label="Price" type="number" name="price" variant="outlined" onChange={handleOnChange} value={350} />
+                        <Grid
+                            style={{
+                                textAlign: "center",
+                                width: "100%",
+                                padding: 20,
+                                alignItems: "center",
+                                background: "#FFFFFF 0% 0% no-repeat padding-box",
+                                boxShadow: "0px 3px 6px #00000029",
+                                borderRadius: 19,
+                                opacity: 1,
+                                alignSelf: "center",
+                            }}
+                            container
+                        >
+                            <TextField autoFocus margin="dense" id="name" label="Price" type="number" name="price" variant="outlined" onChange={handleChangeText} value={fullValues.villa.price} />
                             <Button color="primary" onClick={() => setEditPrice(false)}>
                                 Edit Price
                             </Button>
                             <Button color="error" onClick={() => setEditPrice(false)}>
                                 Cancel
                             </Button>
-                        </>
+                        </Grid>
                     )}
-                </Stack>
-            </Stack>
+                </Grid>
+            </Grid>
             <Divider />
             <Typography variant="h3">Client Information</Typography>
-            <Grid direction={"row"}>
-                <TextField margin="dense" id="full_name" label="Full Name" type="text" name="full_name" variant="outlined" onChange={handleOnChange} value={350} />
-                <TextField style={{ marginLeft: "3%" }} margin="dense" id="phone" label="Phone" type="number" name="phone" variant="outlined" onChange={handleOnChange} value={350} />
+            <Grid>
+                <TextField margin="dense" id="full_name" label="Full Name" type="text" name="full_name" variant="outlined" onChange={handleChangeClient} value={fullValues.client?.full_name} />
+                <TextField
+                    style={{ marginLeft: "3%" }}
+                    margin="dense"
+                    id="phone"
+                    label="Phone"
+                    type="number"
+                    name="phone"
+                    variant="outlined"
+                    onChange={handleChangeClient}
+                    value={fullValues.client?.phone}
+                />
             </Grid>
-            <Grid direction={"row"}>
-                <TextField margin="dense" id="email" label="Email" type="email" name="email" variant="outlined" onChange={handleOnChange} value={350} />
-                <TextField style={{ marginLeft: "3%" }} margin="dense" id="guests" label="Number of Guests" type="number" name="guests" variant="outlined" onChange={handleOnChange} value={350} />
+            <Grid>
+                <TextField margin="dense" id="email" label="Email" type="email" name="email" variant="outlined" onChange={handleChangeClient} value={fullValues.client?.email} />
+                <TextField
+                    style={{ marginLeft: "3%" }}
+                    margin="dense"
+                    id="guests"
+                    label="Number of Guests"
+                    type="number"
+                    name="guests"
+                    variant="outlined"
+                    onChange={handleChangeText}
+                    value={fullValues.client.guests}
+                />
             </Grid>
-            <Grid direction={"row"}>
+            <Grid>
                 <FormControlLabel control={<Checkbox defaultChecked />} label="No prepayment" />
                 <FormControlLabel control={<Checkbox defaultChecked />} label="Deposit" />
                 <FormControlLabel control={<Checkbox defaultChecked />} label="Full Prepayment" />
             </Grid>
             <FormControl fullWidth sx={{ m: 1, width: 300 }}>
-                <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-                <OutlinedInput id="outlined-adornment-amount" type="number" endAdornment={<InputAdornment position="start">$</InputAdornment>} label="Amount" />
+                <InputLabel>Amount</InputLabel>
+                <OutlinedInput
+                    id="amount"
+                    name="amount"
+                    type="number"
+                    label="Amount"
+                    onChange={handleChangeText}
+                    value={fullValues.amount}
+                    endAdornment={<InputAdornment position="start">$</InputAdornment>}
+                />
             </FormControl>
+            <Divider />
+            <Button variant="contained" color="primary" onClick={() => console.log("fullValues: ", fullValues)}>
+                Add Booking
+            </Button>
         </Container>
     );
 };

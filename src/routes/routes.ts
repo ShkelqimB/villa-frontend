@@ -6,12 +6,7 @@ import Villas from '../views/Villas';
 import Settings from '../views/Settings';
 import Booking from '../views/Booking';
 import Calendars from '../views/Calendar';
-
-// Icons
-// import DevicesIcon from 'assets/deviceIcon.svg';
-// import HomeIcon from 'assets/homeIcon.svg';
-// import UsersIcon from 'assets/usersIcon.svg';
-// import ManageIcon from 'assets/Settings.svg';
+import Income from '../views/Income';
 
 // Here should be routes can access admins
 const AdminLinks = [
@@ -66,10 +61,20 @@ const AdminLinks = [
     roles: ['0', '1', '2'],
   },
   {
+    path: '/incomes',
+    name: 'Incomes',
+    component: Income,
+    value: 6,
+    // color: silicaColors.icons.devices,
+    // icon: DevicesIcon,
+    default: '/incomes',
+    roles: ['0', '1', '2'],
+  },
+  {
     path: '/users',
     name: 'Users',
     component: Users,
-    value: 6,
+    value: 7,
     // color: silicaColors.icons.users,
     // icon: UsersIcon,
     default: '/users',
@@ -79,7 +84,7 @@ const AdminLinks = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
-    value: 7,
+    value: 8,
     // color: silicaColors.icons.users,
     // icon: UsersIcon,
     default: '/settings',
@@ -117,6 +122,11 @@ const AdminRoutes = [
     path: '/expenses',
     name: 'Expenses',
     component: Expenses,
+  },
+  {
+    path: '/incomes',
+    name: 'Income',
+    component: Income,
   },
   {
     path: '/users',

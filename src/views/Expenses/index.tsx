@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api";
-import CustomTable from "../../components/Table";
+import CustomTable from "../../components/TableExpense";
 // import { Expense } from "../../interfaces/expense.interface";
 
 const Expenses = () => {

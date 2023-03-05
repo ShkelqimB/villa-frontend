@@ -1,26 +1,42 @@
 import { Container, Divider, Grid, Typography } from "@mui/material";
+import moment from "moment";
 import { useState, useEffect } from "react";
 import api from "../../api";
-import { Villa } from "../../interfaces/villa.interface";
+import { Roll_Payment } from "../../interfaces/rollPayment.interface";
 
 const Home = () => {
-    const [villas, setVillas] = useState([]);
-    const getVillas = async () => {
-        const result = await api.getAllVillas();
-        console.log("🚀 ~ file: index.tsx:8 ~ getVillas ~ result", result.data);
-        setVillas(result.data);
+    const [rollPayments, setRollPayments] = useState<Roll_Payment[]>([]);
+    const [totalIncome, setTotalIncome] = useState<number>(0);
+    const [totalExpense, setTotalExpense] = useState<number>(0);
+    const getRollPayments = async () => {
+        const result = await api.getAllRollPayment();
+        setRollPayments(result.data);
+    };
+
+    const getTotalIncome = async () => {
+        const result = await api.getIncome();
+        setTotalIncome(result.data.total);
+    };
+
+    const getTotalExpense = async () => {
+        const result = await api.getTotal();
+        setTotalExpense(result.data.total);
     };
 
     useEffect(() => {
-        getVillas();
+        getRollPayments();
+        getTotalIncome();
+        getTotalExpense();
     }, []);
     return (
         <Container maxWidth="lg">
             <Typography variant="h3">Next Booking</Typography>
             <Divider />
             <Grid container spacing={2}>
-                {villas.length > 0 &&
-                    villas.map((row: Villa, index) => {
+                {rollPayments.length > 0 &&
+                    rollPayments.map((row: Roll_Payment, index: number) => {
+                        var a = moment(row.checkin);
+                        var b = moment(row.checkout);
                         return (
                             <Grid
                                 style={{
@@ -37,15 +53,15 @@ const Home = () => {
                             >
                                 <Grid item xs={12}>
                                     <Typography variant="h5" fontWeight={"bold"}>
-                                        06.02.2023
+                                        {moment(row.checkin).format("DD.MM.YYYY")}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Typography variant="h6">Florent Avdyli</Typography>
+                                    <Typography variant="h6">{row.client.full_name}</Typography>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Typography variant="h5" fontWeight={"bold"}>
-                                        1 Day
+                                        {Math.abs(a.diff(b, "days"))} days
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -55,40 +71,62 @@ const Home = () => {
             <Divider />
             <Typography variant="h3">Income and expenses actual month</Typography>
             <Grid container spacing={2}>
-                {villas.length > 0 &&
-                    villas.map((row: Villa, index) => {
-                        return (
-                            <Grid
-                                style={{
-                                    background: "#0092D7 0% 0% no-repeat padding-box",
-                                    boxShadow: "0px 3px 6px #00000029",
-                                    borderRadius: 19,
-                                    opacity: 1,
-                                    margin: "2%",
-                                    textAlign: "center",
-                                    width: 200,
-                                    padding: 20,
-                                }}
-                                key={index}
-                            >
-                                <Grid item xs={12}>
-                                    <Typography variant="h5" color="white" fontWeight={"bold"}>
-                                        Income
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography variant="h3" color="white" fontWeight={"bold"}>
-                                        8330 $
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography variant="subtitle1" color="white">
-                                        Total
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        );
-                    })}
+                <Grid
+                    style={{
+                        background: "#0092D7 0% 0% no-repeat padding-box",
+                        boxShadow: "0px 3px 6px #00000029",
+                        borderRadius: 19,
+                        opacity: 1,
+                        margin: "2%",
+                        textAlign: "center",
+                        width: 200,
+                        padding: 20,
+                    }}
+                >
+                    <Grid item xs={12}>
+                        <Typography variant="h5" color="white" fontWeight={"bold"}>
+                            Income
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4" color="white" fontWeight={"bold"}>
+                            {totalIncome} $
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="subtitle1" color="white">
+                            Total
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid
+                    style={{
+                        background: "#0092D7 0% 0% no-repeat padding-box",
+                        boxShadow: "0px 3px 6px #00000029",
+                        borderRadius: 19,
+                        opacity: 1,
+                        margin: "2%",
+                        textAlign: "center",
+                        width: 200,
+                        padding: 20,
+                    }}
+                >
+                    <Grid item xs={12}>
+                        <Typography variant="h5" color="white" fontWeight={"bold"}>
+                            Expense
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4" color="white" fontWeight={"bold"}>
+                            {totalExpense} $
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="subtitle1" color="white">
+                            Total
+                        </Typography>
+                    </Grid>
+                </Grid>
             </Grid>
         </Container>
     );
