@@ -55,64 +55,62 @@ const Users = () => {
     const [openPopUp, setOpenPopUp] = useState({ update: false, delete: false, create: false });
     return (
         <Box sx={{ width: "100%" }}>
-            <Paper sx={{ width: "100%", mb: 2 }}>
-                <CreateDialog open={openPopUp} setOpen={setOpenPopUp} users={users} setUsers={setUsers} />
-                <UpdateDialog open={openPopUp} setOpen={setOpenPopUp} users={users} setUsers={setUsers} updatedObj={updatedObj} setUpdatedObj={setUpdatedObj} />
-                <DeleteDialog open={openPopUp} setOpen={setOpenPopUp} deleteObj={deleteObj} users={users} setUsers={setUsers} />
-                <TableToolbar openPopUp={openPopUp} setOpenPopUp={setOpenPopUp} />
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Full Name</TableCell>
-                                <TableCell align="right">Email</TableCell>
-                                <TableCell align="right">Phone</TableCell>
-                                <TableCell align="right">Age</TableCell>
-                                <TableCell align="right">Role</TableCell>
-                                <TableCell align="right">Password</TableCell>
-                                <TableCell align="right">Action</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {users?.length > 0 &&
-                                users?.map((row: User) => (
-                                    <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                                        <TableCell component="th" scope="row">
-                                            {row.full_name}
-                                        </TableCell>
-                                        <TableCell align="right">{row.email}</TableCell>
-                                        <TableCell align="right">{row.phone}</TableCell>
-                                        <TableCell align="right">{row.age}</TableCell>
-                                        <TableCell align="right">{row.role === 1 ? "Admin" : "Worker"}</TableCell>
-                                        <TableCell align="right">*********</TableCell>
-                                        <TableCell align="right">
-                                            <Tooltip title="Delete">
-                                                <IconButton
-                                                    onClick={() => {
-                                                        setOpenPopUp({ ...openPopUp, delete: true });
-                                                        setDeleteObj(row);
-                                                    }}
-                                                >
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                            <Tooltip title="Edit">
-                                                <IconButton
-                                                    onClick={() => {
-                                                        setOpenPopUp({ ...openPopUp, update: true });
-                                                        setUpdatedObj(row);
-                                                    }}
-                                                >
-                                                    <EditIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Paper>
+            <CreateDialog open={openPopUp} setOpen={setOpenPopUp} users={users} setUsers={setUsers} />
+            <UpdateDialog open={openPopUp} setOpen={setOpenPopUp} users={users} setUsers={setUsers} updatedObj={updatedObj} setUpdatedObj={setUpdatedObj} />
+            <DeleteDialog open={openPopUp} setOpen={setOpenPopUp} deleteObj={deleteObj} users={users} setUsers={setUsers} />
+            <TableToolbar openPopUp={openPopUp} setOpenPopUp={setOpenPopUp} />
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650, marginRight: "auto", marginLeft: "auto", width: "90%" }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Full Name</TableCell>
+                            <TableCell align="right">Email</TableCell>
+                            <TableCell align="right">Phone</TableCell>
+                            <TableCell align="right">Age</TableCell>
+                            <TableCell align="right">Role</TableCell>
+                            <TableCell align="right">Password</TableCell>
+                            <TableCell align="right">Action</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {users?.length > 0 &&
+                            users?.map((row: User) => (
+                                <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                                    <TableCell component="th" scope="row">
+                                        {row.full_name}
+                                    </TableCell>
+                                    <TableCell align="right">{row.email}</TableCell>
+                                    <TableCell align="right">{row.phone}</TableCell>
+                                    <TableCell align="right">{row.age}</TableCell>
+                                    <TableCell align="right">{row.role === 1 ? "Admin" : "Worker"}</TableCell>
+                                    <TableCell align="right">*********</TableCell>
+                                    <TableCell align="right">
+                                        <Tooltip title="Delete">
+                                            <IconButton
+                                                onClick={() => {
+                                                    setOpenPopUp({ ...openPopUp, delete: true });
+                                                    setDeleteObj(row);
+                                                }}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Edit">
+                                            <IconButton
+                                                onClick={() => {
+                                                    setOpenPopUp({ ...openPopUp, update: true });
+                                                    setUpdatedObj(row);
+                                                }}
+                                            >
+                                                <EditIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </Box>
     );
 };
@@ -150,7 +148,7 @@ const CreateDialog = ({ open, setOpen, users, setUsers }: any) => {
         <Dialog open={open.create} onClose={() => setOpen({ ...open, create: false })}>
             <DialogTitle>Create User</DialogTitle>
             <DialogContent>
-                <TextField autoFocus margin="dense" id="Full_name" label="Full Name" type="text" name="Full_name" fullWidth variant="standard" onChange={handleChange} value={values.full_name} />
+                <TextField autoFocus margin="dense" id="full_name" label="Full Name" type="text" name="full_name" fullWidth variant="standard" onChange={handleChange} value={values.full_name} />
                 <TextField margin="dense" id="email" label="Email" type="email" name="email" fullWidth variant="standard" onChange={handleChange} value={values.email} />
                 <TextField margin="dense" id="phone" label="Phone" type="number" name="phone" fullWidth variant="standard" onChange={handleChange} value={values.phone} />
                 <TextField margin="dense" id="age" label="age" type="number" name="age" fullWidth variant="standard" onChange={handleChange} value={values.age} />

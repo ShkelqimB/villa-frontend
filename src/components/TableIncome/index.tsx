@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
     Table,
     TableBody,
@@ -5,7 +6,6 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
     Button,
     Box,
     IconButton,
@@ -15,23 +15,24 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    TextField,
     DialogActions,
     Fab,
+    Divider,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import api from "../../api";
-import { Expense } from "../../interfaces/expense.interface";
-import { useEffect, useState } from "react";
-import { Roll_Payment } from "../../interfaces/rollPayment.interface";
+import { Client_RollPayment, Roll_Payment } from "../../interfaces/rollPayment.interface";
 import moment from "moment";
+import ChooseVilla from "../ChooseVilla";
+import PickDateTime from "../PickDateTime";
+import ChooseClient from "../ChooseClient";
 
 function TableToolbar({ openPopUp, setOpenPopUp }: any) {
     return (
         <Toolbar sx={{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }}>
-            <Typography sx={{ flex: "1 1 100%" }} variant="h6" id="tableTitle" component="div">
+            <Typography sx={{ flex: "1 1 100%" }} variant="h4" id="tableTitle" component="div">
                 Income
             </Typography>
             <Fab color="primary" aria-label="add" variant="extended" onClick={() => setOpenPopUp({ ...openPopUp, create: true })}>
@@ -50,171 +51,212 @@ const CustomTable = (props: any) => {
 
     return (
         <Box sx={{ width: "100%" }}>
-            <Paper sx={{ width: "100%", mb: 2 }}>
-                {/* <CreateDialog open={openPopUp} setOpen={setOpenPopUp} incomes={incomes} setIncomes={setIncomes} />
-                <UpdateDialog open={openPopUp} setOpen={setOpenPopUp} incomes={incomes} setIncomes={setIncomes} updatedObj={updatedObj} setUpdatedObj={setUpdatedObj} /> */}
-                <DeleteDialog open={openPopUp} setOpen={setOpenPopUp} deleteObj={deleteObj} incomes={incomes} setIncomes={setIncomes} />
-                <TableToolbar openPopUp={openPopUp} setOpenPopUp={setOpenPopUp} incomes={incomes} setIncomes={setIncomes} />
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Amount</TableCell>
-                                <TableCell>Guest</TableCell>
-                                <TableCell>Guests</TableCell>
-                                <TableCell>Checkin</TableCell>
-                                <TableCell>Checkout</TableCell>
-                                <TableCell>Client Id</TableCell>
-                                <TableCell>Villa Id</TableCell>
-                                <TableCell></TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {incomes?.length > 0 &&
-                                incomes?.map((row: Roll_Payment) => (
-                                    <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                                        <TableCell component="th" scope="row">
-                                            {row.amount}
-                                        </TableCell>
-                                        <TableCell>{row.client.full_name}</TableCell>
-                                        <TableCell>{row.guests}</TableCell>
-                                        <TableCell>{moment(row.checkin).format("MMMM Do YYYY, h:mm:ss a")}</TableCell>
-                                        <TableCell>{moment(row.checkout).format("MMMM Do YYYY, h:mm:ss a")}</TableCell>
-                                        <TableCell>{row.client.id}</TableCell>
-                                        <TableCell>{row.villa.id}</TableCell>
-                                        <TableCell>
-                                            <Tooltip title="Delete">
-                                                <IconButton
-                                                    onClick={() => {
-                                                        setOpenPopUp({ ...openPopUp, delete: true });
-                                                        setDeleteObj(row);
-                                                    }}
-                                                >
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                            <Tooltip title="Edit">
-                                                <IconButton
-                                                    onClick={() => {
-                                                        setOpenPopUp({ ...openPopUp, update: true });
-                                                        setUpdatedObj(row);
-                                                    }}
-                                                >
-                                                    <EditIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Paper>
+            {/* <Paper sx={{ width: "100%", mb: 2 }}> */}
+            <CreateDialog open={openPopUp} setOpen={setOpenPopUp} incomes={incomes} setIncomes={setIncomes} />
+            <UpdateDialog open={openPopUp} setOpen={setOpenPopUp} incomes={incomes} setIncomes={setIncomes} updatedObj={updatedObj} setUpdatedObj={setUpdatedObj} />
+            <DeleteDialog open={openPopUp} setOpen={setOpenPopUp} deleteObj={deleteObj} incomes={incomes} setIncomes={setIncomes} />
+            <TableToolbar openPopUp={openPopUp} setOpenPopUp={setOpenPopUp} incomes={incomes} setIncomes={setIncomes} />
+            <TableContainer>
+                <Table sx={{ minWidth: 650, marginRight: "auto", marginLeft: "auto", width: "90%" }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Amount</TableCell>
+                            <TableCell>Guest</TableCell>
+                            <TableCell>Guests</TableCell>
+                            <TableCell>Checkin</TableCell>
+                            <TableCell>Checkout</TableCell>
+                            <TableCell>Client Id</TableCell>
+                            <TableCell>Villa Id</TableCell>
+                            <TableCell></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {incomes?.length > 0 &&
+                            incomes?.map((row: Roll_Payment) => (
+                                <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                                    <TableCell component="th" scope="row">
+                                        {row.amount}
+                                    </TableCell>
+                                    <TableCell>{row.client?.full_name}</TableCell>
+                                    <TableCell>{row?.guests}</TableCell>
+                                    <TableCell>{moment(row?.checkin).format("MMMM Do YYYY, h:mm:ss a")}</TableCell>
+                                    <TableCell>{moment(row?.checkout).format("MMMM Do YYYY, h:mm:ss a")}</TableCell>
+                                    <TableCell>{row.client?.id}</TableCell>
+                                    <TableCell>{row.villa?.id}</TableCell>
+                                    <TableCell>
+                                        <Tooltip title="Delete">
+                                            <IconButton
+                                                onClick={() => {
+                                                    setOpenPopUp({ ...openPopUp, delete: true });
+                                                    setDeleteObj(row);
+                                                }}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Edit">
+                                            <IconButton
+                                                onClick={() => {
+                                                    setOpenPopUp({ ...openPopUp, update: true });
+                                                    setUpdatedObj(row);
+                                                }}
+                                            >
+                                                <EditIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            {/* </Paper> */}
         </Box>
     );
 };
 
 export default CustomTable;
 
-// const CreateDialog = ({ open, setOpen, incomes, setIncomes }: any) => {
-//     const [values, setValues] = useState({
-//         amount: +"",
-//         guests: +"",
-//         checkin: "",
-//         checkout: "",
-//         villa: {},
-//         client: {},
-//     });
+const CreateDialog = ({ open, setOpen, incomes, setIncomes }: any) => {
+    const [fullValues, setFullValues] = useState<Client_RollPayment>({
+        id: +"",
+        amount: +"",
+        guests: +"",
+        checkin: "",
+        checkout: "",
+        no_prepayment: false,
+        deposit: false,
+        full_prepayment: false,
+        client: { full_name: "", email: "", phone: "", guests: +"" },
+        villa: { id: +"", name: "", price: +"", guests: +"" },
+    });
+    const createBooking = async () => {
+        const response = await api.createRollPayment(fullValues);
+        if (response.status === 200) {
+            setFullValues({
+                id: +"",
+                amount: +"",
+                guests: +"",
+                checkin: "",
+                checkout: "",
+                no_prepayment: false,
+                deposit: false,
+                full_prepayment: false,
+                client: { full_name: "", email: "", phone: "", guests: +"" },
+                villa: { id: +"", name: "", price: +"", guests: +"" },
+            });
+            setIncomes((prev: Roll_Payment[]) => [...prev, response.data]);
+            setOpen({ ...open, create: false });
+        } else {
+            console.log("ERROR deleting expense; ", response.data);
+        }
+    };
+    return (
+        <Dialog open={open.create} onClose={() => setOpen({ ...open, create: false })} fullWidth maxWidth="lg">
+            <DialogTitle>Create Expense</DialogTitle>
+            <DialogContent>
+                <Typography variant="h3">Select Villa</Typography>
+                <Divider />
+                <ChooseVilla fullValues={fullValues} setFullValues={setFullValues} />
+                <Divider />
+                <Typography variant="h3">Select Date</Typography>
+                <PickDateTime fullValues={fullValues} setFullValues={setFullValues} />
+                <Divider />
+                <Typography variant="h3">Client Information</Typography>
+                <ChooseClient fullValues={fullValues} setFullValues={setFullValues} />
+                <Divider />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => setOpen({ ...open, create: false })}>Cancel</Button>
+                <Button onClick={() => createBooking()}>Create</Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
 
-//     const handleChange = (event: { persist: () => void; target: { name: any; value: any } }) => {
-//         event.persist();
-//         setValues((values) => ({
-//             ...values,
-//             [event.target.name]: event.target.value,
-//         }));
-//     };
+const UpdateDialog = ({ open, setOpen, setIncomes, updatedObj, setUpdatedObj }: any) => {
+    const [fullValues, setFullValues] = useState<Client_RollPayment>({
+        id: +"",
+        amount: +"",
+        guests: +"",
+        checkin: "",
+        checkout: "",
+        no_prepayment: false,
+        deposit: false,
+        full_prepayment: false,
+        client: { full_name: "", email: "", phone: "", guests: +"" },
+        villa: { id: +"", name: "", price: +"", guests: +"" },
+    });
 
-//     const createRollPayment = async () => {
-//         const { data } = await api.createRollPayment(values);
-//         if (data) {
-//             setIncomes((prev: Roll_Payment[]) => [...prev, data]);
-//             setOpen({ ...open, create: false });
-//         } else {
-//             console.log("ERROR deleting expense; ", data);
-//         }
-//     };
-//     return (
-//         <Dialog open={open.create} onClose={() => setOpen({ ...open, create: false })}>
-//             <DialogTitle>Create Expense</DialogTitle>
-//             <DialogContent>
-//                 <TextField autoFocus margin="dense" id="name" label="Name" type="name" name="name" fullWidth variant="standard" onChange={handleChange} value={values.name} />
-//                 <TextField margin="dense" id="description" label="Description" type="description" name="description" fullWidth variant="standard" onChange={handleChange} value={values.description} />
-//                 <TextField margin="dense" id="date" label="Date" type="date" name="date" fullWidth variant="standard" onChange={handleChange} value={values.date} />
-//                 <TextField margin="dense" id="total" label="Total" type="total" name="total" fullWidth variant="standard" onChange={handleChange} value={values.total} />
-//             </DialogContent>
-//             <DialogActions>
-//                 <Button onClick={() => setOpen({ ...open, create: false })}>Cancel</Button>
-//                 <Button onClick={() => createRollPayment()}>Create</Button>
-//             </DialogActions>
-//         </Dialog>
-//     );
-// };
+    const updateRollPayment = async () => {
+        const updatedRoll_Payment = await api.updateRollPayment(fullValues);
+        if (updatedRoll_Payment) {
+            setIncomes((prev: Roll_Payment[]) => prev.map((item: Roll_Payment) => (item.id !== fullValues.id ? item : fullValues)));
+            setOpen({ ...open, update: false });
+        } else {
+            console.log("ERROR updating roll payment; ", updatedRoll_Payment);
+        }
+    };
 
-// const UpdateDialog = ({ open, setOpen, setIncomes, updatedObj, setUpdatedObj }: any) => {
-//     console.log("🚀 ~ file: index.tsx:159 ~ UpdateDialog ~ updatedObj:", updatedObj);
-//     const [values, setValues] = useState({
-//         id: +"",
-//         amount: "",
-//         description: "",
-//         date: new Date(),
-//         total: +"",
-//     });
+    useEffect(() => {
+        setFullValues({
+            id: updatedObj.id,
+            amount: updatedObj.amount,
+            guests: updatedObj.guests,
+            checkin: updatedObj.checkin,
+            checkout: updatedObj.checkout,
+            no_prepayment: updatedObj.no_prepayment,
+            deposit: updatedObj.deposit,
+            full_prepayment: updatedObj.full_prepayment,
+            client: { id: updatedObj?.client?.id, full_name: updatedObj?.client?.full_name, email: updatedObj?.client?.email, phone: updatedObj?.client?.phone, guests: updatedObj?.client?.guests },
+            villa: { id: updatedObj?.villa?.id, name: updatedObj?.villa?.name, price: updatedObj?.villa?.price, guests: updatedObj?.villa?.guests },
+        });
+    }, [
+        updatedObj.amount,
+        updatedObj.checkin,
+        updatedObj.checkout,
+        updatedObj.client?.email,
+        updatedObj.client?.full_name,
+        updatedObj.client?.guests,
+        updatedObj.client?.id,
+        updatedObj.client?.phone,
+        updatedObj.date,
+        updatedObj.deposit,
+        updatedObj.description,
+        updatedObj.full_prepayment,
+        updatedObj.guests,
+        updatedObj.id,
+        updatedObj.name,
+        updatedObj.no_prepayment,
+        updatedObj.total,
+        updatedObj.villa?.guests,
+        updatedObj.villa?.id,
+        updatedObj.villa?.name,
+        updatedObj.villa?.price,
+    ]);
 
-//     const handleChange = (event: { persist: () => void; target: { name: any; value: any } }) => {
-//         event.persist();
-
-//         setValues((values) => ({
-//             ...values,
-//             [event.target.name]: event.target.value,
-//         }));
-//     };
-
-//     const updateExp = async () => {
-//         const updatedRoll_Payment = await api.updateExpense(values);
-//         if (updatedRoll_Payment) {
-//             setIncomes((prev: Roll_Payment[]) => prev.map((item: Roll_Payment) => (item.id !== values.id ? item : values)));
-//             setOpen({ ...open, update: false });
-//         } else {
-//             console.log("ERROR updating roll payment; ", updatedRoll_Payment);
-//         }
-//     };
-
-//     useEffect(() => {
-//         setValues({
-//             id: updatedObj.id,
-//             name: updatedObj.name,
-//             description: updatedObj.description,
-//             date: updatedObj.date,
-//             total: updatedObj.total,
-//         });
-//     }, [updatedObj.date, updatedObj.description, updatedObj.id, updatedObj.name, updatedObj.total]);
-
-//     return (
-//         <Dialog open={open.update} onClose={() => setOpen({ ...open, update: false })}>
-//             <DialogTitle>Update Income</DialogTitle>
-//             <DialogContent>
-//                 <TextField autoFocus margin="dense" label="Name" type="text" fullWidth name="name" onChange={handleChange} value={values?.name} />
-//                 <TextField margin="dense" label="Description" type="text" fullWidth name="description" onChange={handleChange} value={values?.description} />
-//                 <TextField margin="dense" label="Date" type="date" fullWidth name="date" onChange={handleChange} value={values?.date} />
-//                 <TextField margin="dense" label="Total" type="number" fullWidth name="total" onChange={handleChange} value={values?.total} />
-//             </DialogContent>
-//             <DialogActions>
-//                 <Button onClick={() => setOpen({ ...open, update: false })}>Cancel</Button>
-//                 <Button onClick={() => updateExp()}>Save</Button>
-//             </DialogActions>
-//         </Dialog>
-//     );
-// };
+    return (
+        <Dialog open={open.update} onClose={() => setOpen({ ...open, update: false })} maxWidth="lg">
+            <DialogTitle>Update Income</DialogTitle>
+            <DialogContent>
+                <Typography variant="h3">Select Villa</Typography>
+                <Divider />
+                <ChooseVilla fullValues={fullValues} setFullValues={setFullValues} />
+                <Divider />
+                <Typography variant="h3">Select Date</Typography>
+                <PickDateTime fullValues={fullValues} setFullValues={setFullValues} />
+                <Divider />
+                <Typography variant="h3">Client Information</Typography>
+                <ChooseClient fullValues={fullValues} setFullValues={setFullValues} />
+                <Divider />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => setOpen({ ...open, update: false })}>Cancel</Button>
+                <Button onClick={() => updateRollPayment()}>Save</Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
 
 const DeleteDialog = ({ open, setOpen, deleteObj, incomes, setIncomes }: any) => {
     const removeExp = async () => {

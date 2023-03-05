@@ -5,6 +5,7 @@ import { Villa } from "../../interfaces/villa.interface";
 
 const ChooseVilla = ({ fullValues, setFullValues }: any) => {
     const [villas, setVillas] = useState([]);
+    const [selected, setSelected] = useState<number>();
 
     const getVillas = async () => {
         const result = await api.getAllVillas();
@@ -13,6 +14,7 @@ const ChooseVilla = ({ fullValues, setFullValues }: any) => {
 
     const handleClickVilla = (value: Villa) => {
         setFullValues({ ...fullValues, villa: value });
+        setSelected(value.id);
     };
 
     useEffect(() => {
@@ -25,7 +27,7 @@ const ChooseVilla = ({ fullValues, setFullValues }: any) => {
                     return (
                         <Grid
                             style={{
-                                background: "#0092D7 0% 0% no-repeat padding-box",
+                                background: selected === row.id ? "#0092D7 0% 0% no-repeat padding-box" : "white",
                                 boxShadow: "0px 3px 6px #00000029",
                                 borderRadius: 19,
                                 opacity: 1,
@@ -38,12 +40,12 @@ const ChooseVilla = ({ fullValues, setFullValues }: any) => {
                             key={index}
                         >
                             <Grid item xs={12}>
-                                <Typography variant="h4" color="white" fontWeight={"bold"}>
+                                <Typography variant="h4" fontWeight={"bold"} color={selected === row.id ? "white" : "black"}>
                                     {row.name}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant="h5" color="white">
+                                <Typography variant="h5" color={selected === row.id ? "white" : "black"}>
                                     {row.price} per day
                                 </Typography>
                             </Grid>

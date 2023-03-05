@@ -5,7 +5,6 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
     Button,
     Box,
     IconButton,
@@ -30,7 +29,7 @@ import moment from "moment";
 function TableToolbar({ openPopUp, setOpenPopUp, expenses, setExpenses }: any) {
     return (
         <Toolbar sx={{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }}>
-            <Typography sx={{ flex: "1 1 100%" }} variant="h6" id="tableTitle" component="div">
+            <Typography sx={{ flex: "1 1 100%" }} variant="h4" id="tableTitle" component="div">
                 Expenses
             </Typography>
             <Fab color="primary" aria-label="add" variant="extended" onClick={() => setOpenPopUp({ ...openPopUp, create: true })}>
@@ -49,60 +48,60 @@ const CustomTable = (props: any) => {
 
     return (
         <Box sx={{ width: "100%" }}>
-            <Paper sx={{ width: "100%", mb: 2 }}>
-                <CreateDialog open={openPopUp} setOpen={setOpenPopUp} expenses={expenses} setExpenses={setExpenses} />
-                <UpdateDialog open={openPopUp} setOpen={setOpenPopUp} expenses={expenses} setExpenses={setExpenses} updatedObj={updatedObj} setUpdatedObj={setUpdatedObj} />
-                <DeleteDialog open={openPopUp} setOpen={setOpenPopUp} deleteObj={deleteObj} expenses={expenses} setExpenses={setExpenses} />
-                <TableToolbar openPopUp={openPopUp} setOpenPopUp={setOpenPopUp} expenses={expenses} setExpenses={setExpenses} />
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Name</TableCell>
-                                <TableCell align="right">Description</TableCell>
-                                <TableCell align="right">Date</TableCell>
-                                <TableCell align="right">Total</TableCell>
-                                <TableCell align="right">Action</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {expenses?.length > 0 &&
-                                expenses?.map((row: Expense) => (
-                                    <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                                        <TableCell component="th" scope="row">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="right">{row.description}</TableCell>
-                                        <TableCell align="right">{moment(row.date).format("DD/MM/YYYY")}</TableCell>
-                                        <TableCell align="right">{row.total}</TableCell>
-                                        <TableCell align="right">
-                                            <Tooltip title="Delete">
-                                                <IconButton
-                                                    onClick={() => {
-                                                        setOpenPopUp({ ...openPopUp, delete: true });
-                                                        setDeleteObj(row);
-                                                    }}
-                                                >
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                            <Tooltip title="Edit">
-                                                <IconButton
-                                                    onClick={() => {
-                                                        setOpenPopUp({ ...openPopUp, update: true });
-                                                        setUpdatedObj(row);
-                                                    }}
-                                                >
-                                                    <EditIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Paper>
+            {/* <Paper sx={{ width: "100%", mb: 2 }}> */}
+            <CreateDialog open={openPopUp} setOpen={setOpenPopUp} expenses={expenses} setExpenses={setExpenses} />
+            <UpdateDialog open={openPopUp} setOpen={setOpenPopUp} expenses={expenses} setExpenses={setExpenses} updatedObj={updatedObj} setUpdatedObj={setUpdatedObj} />
+            <DeleteDialog open={openPopUp} setOpen={setOpenPopUp} deleteObj={deleteObj} expenses={expenses} setExpenses={setExpenses} />
+            <TableToolbar openPopUp={openPopUp} setOpenPopUp={setOpenPopUp} expenses={expenses} setExpenses={setExpenses} />
+            <TableContainer>
+                <Table sx={{ minWidth: 650, marginRight: "auto", marginLeft: "auto", width: "90%" }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Description</TableCell>
+                            <TableCell align="right">Date</TableCell>
+                            <TableCell align="right">Total</TableCell>
+                            <TableCell></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {expenses?.length > 0 &&
+                            expenses?.map((row: Expense) => (
+                                <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                                    <TableCell component="th" scope="row">
+                                        {row.name}
+                                    </TableCell>
+                                    <TableCell>{row.description}</TableCell>
+                                    <TableCell align="right">{moment(row.date).format("DD/MM/YYYY")}</TableCell>
+                                    <TableCell align="right">{row.total}</TableCell>
+                                    <TableCell align="right">
+                                        <Tooltip title="Delete">
+                                            <IconButton
+                                                onClick={() => {
+                                                    setOpenPopUp({ ...openPopUp, delete: true });
+                                                    setDeleteObj(row);
+                                                }}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Edit">
+                                            <IconButton
+                                                onClick={() => {
+                                                    setOpenPopUp({ ...openPopUp, update: true });
+                                                    setUpdatedObj(row);
+                                                }}
+                                            >
+                                                <EditIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            {/* </Paper> */}
         </Box>
     );
 };
