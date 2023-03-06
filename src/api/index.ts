@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Expense } from "../interfaces/expense.interface";
-import { Client_RollPayment } from "../interfaces/rollPayment.interface";
+import { Client, Client_RollPayment } from "../interfaces/rollPayment.interface";
 import { User } from "../interfaces/user.interface";
 import { Villa } from "../interfaces/villa.interface";
 
@@ -11,6 +11,13 @@ export default {
     //#region Auth
     login: (values: any) => axios.post(`${baseAPI}authentication/login`, values, { withCredentials: true }),
     logout: () => axios.post(`${baseAPI}authentication/logout`, null, { withCredentials: true }),
+    //#endregion
+    //#region Villa API
+    getAllClients: () => axios.get(`${baseAPI}client`),
+    getClientById: (id: number) => axios.get(`${baseAPI}client/${id}`),
+    createClient: (values: any) => axios.post(`${baseAPI}client`, values),
+    updateClient: (values: Client) => axios.put(`${baseAPI}client/${values.id}`, values),
+    removeClient: (id: number) => axios.delete(`${baseAPI}client/${id}`),
     //#endregion
     //#region Villa API
     getAllVillas: () => axios.get(`${baseAPI}villa`),

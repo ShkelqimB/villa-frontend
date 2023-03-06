@@ -7,6 +7,7 @@ import Settings from '../views/Settings';
 import Booking from '../views/Booking';
 import Calendars from '../views/Calendar';
 import Income from '../views/Income';
+import Client from '../views/Client';
 
 // Here should be routes can access admins
 const AdminLinks = [
@@ -71,6 +72,16 @@ const AdminLinks = [
     roles: ['0', '1', '2'],
   },
   {
+    path: '/clients',
+    name: 'Clients',
+    component: Income,
+    value: 6,
+    // color: silicaColors.icons.devices,
+    // icon: DevicesIcon,
+    default: '/clients',
+    roles: ['0', '1', '2'],
+  },
+  {
     path: '/users',
     name: 'Users',
     component: Users,
@@ -127,6 +138,11 @@ const AdminRoutes = [
     path: '/incomes',
     name: 'Income',
     component: Income,
+  },
+  {
+    path: '/clients',
+    name: 'Clients',
+    component: Client,
   },
   {
     path: '/users',
