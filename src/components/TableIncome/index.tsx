@@ -65,8 +65,7 @@ const CustomTable = (props: any) => {
                             <TableCell>Guests</TableCell>
                             <TableCell>Checkin</TableCell>
                             <TableCell>Checkout</TableCell>
-                            <TableCell>Client Id</TableCell>
-                            <TableCell>Villa Id</TableCell>
+                            <TableCell>Villa Name</TableCell>
                             <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
@@ -78,11 +77,10 @@ const CustomTable = (props: any) => {
                                         {row.amount}
                                     </TableCell>
                                     <TableCell>{row.client?.full_name}</TableCell>
-                                    <TableCell>{row?.guests}</TableCell>
+                                    <TableCell>{row?.villa?.guests}</TableCell>
                                     <TableCell>{moment(row?.checkin).format("MMMM Do YYYY, h:mm:ss a")}</TableCell>
                                     <TableCell>{moment(row?.checkout).format("MMMM Do YYYY, h:mm:ss a")}</TableCell>
-                                    <TableCell>{row.client?.id}</TableCell>
-                                    <TableCell>{row.villa?.id}</TableCell>
+                                    <TableCell>{row.villa?.name}</TableCell>
                                     <TableCell>
                                         <Tooltip title="Delete">
                                             <IconButton

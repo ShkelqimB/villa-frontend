@@ -17,8 +17,6 @@ import routes from "../../routes/routes";
 import { useAuth } from "../../context/AuthProvider";
 import api from "../../api";
 
-const pages = ["Clients", "Bookings", "Calendar", "House", "Expenses", "Income"];
-
 const Navbar = ({ isLoggedIn }: any) => {
     const { logout } = useAuth();
     const navigate = useNavigate();
@@ -46,7 +44,6 @@ const Navbar = ({ isLoggedIn }: any) => {
     };
 
     const LinkRedirect = (path: string) => {
-        console.log("🚀 ~ file: index.tsx:36 ~ LinkRedirect ~ path", path);
         setAnchorElNav(null);
         navigate(path);
     };
@@ -102,9 +99,9 @@ const Navbar = ({ isLoggedIn }: any) => {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                            {routes.AdminLinks.map((page, index) => (
+                                <MenuItem key={index} onClick={() => LinkRedirect(page.path)}>
+                                    <Typography textAlign="center">{page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

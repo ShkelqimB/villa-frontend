@@ -11,7 +11,6 @@ const Villas = () => {
     const [openPopUp, setOpenPopUp] = useState({ update: false, delete: false, create: false });
     const getVillas = async () => {
         const result = await api.getAllVillas();
-        console.log("🚀 ~ file: index.tsx:8 ~ getVillas ~ result", result.data);
         setVillas(result.data);
     };
 
@@ -43,7 +42,7 @@ const Villas = () => {
                             key={index}
                         >
                             <Grid item xs={2}>
-                                <img src="https://source.unsplash.com/random" style={{ width: 100, height: 100, border: "1px solid #707070", opacity: 1, borderRadius: "100%" }} />
+                                <img src="https://source.unsplash.com/random" style={{ width: "100%", height: 100, border: "1px solid #707070", opacity: 1, borderRadius: "100%" }} />
                             </Grid>
                             <Grid item xs={7}>
                                 <Typography variant="h3">Name: {row.name}</Typography>
@@ -176,7 +175,6 @@ const UpdateDialog = ({ open, setOpen, setVillas, updatedObj, setUpdatedObj }: a
 };
 
 const DeleteDialog = ({ open, setOpen, deleteObj, villas, setVillas }: any) => {
-    console.log("🚀 ~ file: index.tsx:179 ~ DeleteDialog ~ deleteObj", deleteObj);
     const removeExp = async () => {
         const removedItem = await api.removeVilla(deleteObj.id);
         if (removedItem) {

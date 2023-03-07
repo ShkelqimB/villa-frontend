@@ -1,6 +1,8 @@
 import { Checkbox, FormControl, FormControlLabel, Grid, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import { useState } from "react";
 
 const ChooseClient = ({ fullValues, setFullValues }: any) => {
+    const [error, setError] = useState(false);
     const handleChangeCheckBox = (event: { persist: () => void; target: { name: any; checked: boolean } }) => {
         event.persist();
         setFullValues((values: any) => ({
@@ -19,6 +21,11 @@ const ChooseClient = ({ fullValues, setFullValues }: any) => {
 
     const handleChangeClient = (event: { persist: () => void; target: { name: any; value: any } }) => {
         event.persist();
+        if (event.target.name === "guests" && event.target.value > fullValues.villa.guests) {
+            setError(true);
+        } else {
+            setError(false);
+        }
         setFullValues((values: any) => ({
             ...values,
             client: {
@@ -46,7 +53,7 @@ const ChooseClient = ({ fullValues, setFullValues }: any) => {
             <Grid>
                 <TextField margin="dense" id="email" label="Email" type="email" name="email" variant="outlined" onChange={handleChangeClient} value={fullValues.client?.email} />
                 <TextField
-                    style={{ marginLeft: "3%" }}
+                    style={{ marginLeft: "3%", width: 235 }}
                     margin="dense"
                     id="guests"
                     label="Number of Guests"
@@ -55,6 +62,9 @@ const ChooseClient = ({ fullValues, setFullValues }: any) => {
                     variant="outlined"
                     onChange={handleChangeClient}
                     value={fullValues.client?.guests}
+                    InputProps={{ inputProps: { min: 0, max: fullValues.villa.guests } }}
+                    error={error}
+                    helperText={error ? "Incorrect entry." : null}
                 />
             </Grid>
             <Grid>

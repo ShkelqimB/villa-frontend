@@ -8,6 +8,7 @@ import Booking from '../views/Booking';
 import Calendars from '../views/Calendar';
 import Income from '../views/Income';
 import Client from '../views/Client';
+import IncomesAndExpenses from '../views/IncomesAndExpenses';
 
 // Here should be routes can access admins
 const AdminLinks = [
@@ -72,10 +73,20 @@ const AdminLinks = [
     roles: ['0', '1', '2'],
   },
   {
+    path: '/incomeexpense',
+    name: 'Incomes&Expenses',
+    component: IncomesAndExpenses,
+    value: 7,
+    // color: silicaColors.icons.devices,
+    // icon: DevicesIcon,
+    default: '/incomeexpense',
+    roles: ['0', '1', '2'],
+  },
+  {
     path: '/clients',
     name: 'Clients',
     component: Income,
-    value: 6,
+    value: 8,
     // color: silicaColors.icons.devices,
     // icon: DevicesIcon,
     default: '/clients',
@@ -85,7 +96,7 @@ const AdminLinks = [
     path: '/users',
     name: 'Users',
     component: Users,
-    value: 7,
+    value: 9,
     // color: silicaColors.icons.users,
     // icon: UsersIcon,
     default: '/users',
@@ -95,7 +106,7 @@ const AdminLinks = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
-    value: 8,
+    value: 10,
     // color: silicaColors.icons.users,
     // icon: UsersIcon,
     default: '/settings',
@@ -138,6 +149,11 @@ const AdminRoutes = [
     path: '/incomes',
     name: 'Income',
     component: Income,
+  },
+  {
+    path: '/incomeexpense',
+    name: 'Income&Expense',
+    component: IncomesAndExpenses,
   },
   {
     path: '/clients',

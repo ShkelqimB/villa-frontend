@@ -32,7 +32,7 @@ const Home = () => {
         <Container maxWidth="lg">
             <Typography variant="h3">Next Booking</Typography>
             <Divider />
-            <Grid container spacing={2}>
+            <Grid container>
                 {rollPayments.length > 0 &&
                     rollPayments.map((row: Roll_Payment, index: number) => {
                         var a = moment(row.checkin);
@@ -46,7 +46,7 @@ const Home = () => {
                                     opacity: 1,
                                     margin: "2%",
                                     textAlign: "center",
-                                    width: 200,
+                                    width: 240,
                                     padding: 20,
                                 }}
                                 key={index}
@@ -79,7 +79,7 @@ const Home = () => {
                         opacity: 1,
                         margin: "2%",
                         textAlign: "center",
-                        width: 200,
+                        width: 240,
                         padding: 20,
                     }}
                 >
@@ -107,7 +107,7 @@ const Home = () => {
                         opacity: 1,
                         margin: "2%",
                         textAlign: "center",
-                        width: 200,
+                        width: 240,
                         padding: 20,
                     }}
                 >

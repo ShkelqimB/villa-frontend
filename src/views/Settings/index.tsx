@@ -50,7 +50,7 @@ export const Settings = () => {
             <Typography variant="h4">Settings</Typography>
             <Divider />
             <Grid container spacing={2} direction="column" style={{ marginTop: "5%", margin: "auto", textAlign: "center", alignItems: "center" }}>
-                <Grid xs={12} md={12}>
+                <Grid item xs={12} md={12}>
                     <TextField
                         style={{ margin: 10 }}
                         id="full_name"
@@ -64,11 +64,11 @@ export const Settings = () => {
                     />
                     <TextField style={{ margin: 10 }} id="email" label="Email" type="email" name="email" variant="outlined" onChange={handleChange} value={values?.email} disabled={view || false} />
                 </Grid>
-                <Grid xs={12} md={12}>
+                <Grid item xs={12} md={12}>
                     <TextField style={{ margin: 10 }} id="age" label="Age" type="number" name="age" variant="outlined" onChange={handleChange} value={values?.age} disabled={view || false} />
                     <TextField style={{ margin: 10 }} id="phone" label="Phone" type="tel" name="phone" variant="outlined" onChange={handleChange} value={values?.phone} disabled={view || false} />
                 </Grid>
-                <Grid xs={12} md={12}>
+                <Grid item xs={12} md={12}>
                     {" "}
                     <TextField style={{ margin: 10 }} id="role" label="Role" type="text" name="role" variant="outlined" onChange={handleChange} value={values?.role} disabled={view || false} />
                     <TextField

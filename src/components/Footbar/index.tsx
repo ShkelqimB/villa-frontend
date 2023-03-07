@@ -17,7 +17,7 @@ const Copyright = () => {
 const Footbar = () => {
     return (
         <div>
-            <div style={{ display: "block", padding: "20px", height: "60px", width: "100%" }} />
+            <div style={{ display: "block", height: "60px", width: "100%" }} />
             <div
                 style={{
                     backgroundColor: "white",
@@ -25,7 +25,7 @@ const Footbar = () => {
                     color: "white",
                     borderTop: "1px solid #E7E7E7",
                     textAlign: "center",
-                    padding: "20px",
+                    // padding: "20px",
                     position: "fixed",
                     left: "0",
                     bottom: "0",

@@ -19,10 +19,12 @@ const Calendars = () => {
     }, []);
 
     for (let i in rollPayments) {
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
         arr.push({
             title: `${rollPayments[i]?.villa?.name}-${rollPayments[i]?.client?.full_name}`,
             start: rollPayments[i].checkin,
             end: rollPayments[i].checkout,
+            color: `#${randomColor}`,
         });
     }
 
@@ -31,7 +33,30 @@ const Calendars = () => {
             <Typography variant="h3">Calendar</Typography>
             <Divider />
             <div className="rbc-calendar">
-                <Calendar localizer={localizer} events={arr} startAccessor="start" endAccessor="end" style={{ height: 500 }} />
+                <Calendar
+                    localizer={localizer}
+                    events={arr}
+                    startAccessor="start"
+                    endAccessor="end"
+                    style={{ height: 500 }}
+                    eventPropGetter={(event, start, end, isSelected) => {
+                        let newStyle = {
+                            backgroundColor: event.color,
+                            color: "black",
+                            borderRadius: "0px",
+                            border: "none",
+                        };
+
+                        if (event.isMine) {
+                            newStyle.backgroundColor = "lightgreen";
+                        }
+
+                        return {
+                            className: "",
+                            style: newStyle,
+                        };
+                    }}
+                />
             </div>
         </Container>
     );
