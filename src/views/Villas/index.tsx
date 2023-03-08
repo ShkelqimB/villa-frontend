@@ -25,57 +25,63 @@ const Villas = () => {
             <CreateDialog open={openPopUp} setOpen={setOpenPopUp} villas={villas} setVillas={setVillas} />
             <UpdateDialog open={openPopUp} setOpen={setOpenPopUp} villas={villas} setVillas={setVillas} updatedObj={updatedObj} setUpdatedObj={setUpdatedObj} />
             <DeleteDialog open={openPopUp} setOpen={setOpenPopUp} deleteObj={deleteObj} villas={villas} setVillas={setVillas} />
-            {villas.length > 0 &&
-                villas.map((row: Villa, index) => {
-                    return (
-                        <Grid
-                            container
-                            spacing={2}
-                            style={{
-                                background: "#FFFFFF 0% 0% no-repeat padding-box",
-                                boxShadow: "0px 3px 6px #00000029",
-                                borderRadius: 16,
-                                opacity: 1,
-                                margin: "5% auto auto",
-                                width: 1000,
-                            }}
-                            key={index}
-                        >
-                            <Grid item xs={2}>
-                                <img src="https://source.unsplash.com/random" style={{ width: "100%", height: 100, border: "1px solid #707070", opacity: 1, borderRadius: "100%" }} />
+            <Grid container direction={"column"} style={{ paddingLeft: "10%", paddingRight: "10%" }}>
+                {villas.length > 0 &&
+                    villas.map((row: Villa, index) => {
+                        return (
+                            <Grid
+                                container
+                                spacing={2}
+                                style={{
+                                    background: "#FFFFFF 0% 0% no-repeat padding-box",
+                                    boxShadow: "0px 3px 6px #00000029",
+                                    borderRadius: 16,
+                                    opacity: 1,
+                                    marginTop: "2%",
+                                    // margin: "5% auto auto",
+                                    padding: "1%",
+                                    width: "100%",
+                                }}
+                                key={index}
+                            >
+                                <Grid item xs={6} sm={6} md={2}>
+                                    <img src="https://source.unsplash.com/random" style={{ width: "100%", height: 100, border: "1px solid #707070", opacity: 1, borderRadius: "100%" }} />
+                                </Grid>
+                                <Grid item xs={6} sm={6} md={8}>
+                                    <Typography variant="h4" fontWeight="800" noWrap>
+                                        Name: {row.name}
+                                    </Typography>
+                                    <Typography variant="h6">Guests: {row.guests}</Typography>
+                                    <Typography variant="h6">Price: {row.price}</Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={12} md={2}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        style={{ width: "100%", marginTop: 5, marginBottom: 5 }}
+                                        onClick={() => {
+                                            setOpenPopUp({ ...openPopUp, update: true });
+                                            setUpdatedObj(row);
+                                        }}
+                                    >
+                                        Edit
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        style={{ width: "100%", marginTop: 5, marginBottom: 5 }}
+                                        onClick={() => {
+                                            setOpenPopUp({ ...openPopUp, delete: true });
+                                            setDeleteObj(row);
+                                        }}
+                                    >
+                                        Remove
+                                    </Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={7}>
-                                <Typography variant="h3">Name: {row.name}</Typography>
-                                <Typography variant="h6">Guests: {row.guests}</Typography>
-                                <Typography variant="h6">Price: {row.price}</Typography>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    style={{ width: 200, margin: 5 }}
-                                    onClick={() => {
-                                        setOpenPopUp({ ...openPopUp, update: true });
-                                        setUpdatedObj(row);
-                                    }}
-                                >
-                                    Edit
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    style={{ width: 200, margin: 5 }}
-                                    onClick={() => {
-                                        setOpenPopUp({ ...openPopUp, delete: true });
-                                        setDeleteObj(row);
-                                    }}
-                                >
-                                    Remove
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    );
-                })}
+                        );
+                    })}
+            </Grid>
         </>
     );
 };

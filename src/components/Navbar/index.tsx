@@ -17,7 +17,7 @@ import routes from "../../routes/routes";
 import { useAuth } from "../../context/AuthProvider";
 import api from "../../api";
 
-const Navbar = ({ isLoggedIn }: any) => {
+const Navbar = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -25,14 +25,6 @@ const Navbar = ({ isLoggedIn }: any) => {
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElNav(null);
     };
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -94,7 +86,7 @@ const Navbar = ({ isLoggedIn }: any) => {
                                 horizontal: "left",
                             }}
                             open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
+                            onClose={() => setAnchorElNav(null)}
                             sx={{
                                 display: { xs: "block", md: "none" },
                             }}
@@ -154,7 +146,7 @@ const Navbar = ({ isLoggedIn }: any) => {
                                     horizontal: "right",
                                 }}
                                 open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
+                                onClose={() => setAnchorElUser(null)}
                             >
                                 <MenuItem onClick={() => handleLogout()}>
                                     <Typography textAlign="center">Logout</Typography>
