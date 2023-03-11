@@ -32,7 +32,7 @@ export const Settings = () => {
             phone: user.data.phone,
             age: user.data.age,
             role: user.data.role,
-            password: user.data.password,
+            password: "",
         });
     };
 

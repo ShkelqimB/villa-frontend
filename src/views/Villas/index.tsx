@@ -49,7 +49,7 @@ const Villas = () => {
                                 </Grid>
                                 <Grid item xs={6} sm={6} md={8}>
                                     <Typography variant="h4" fontWeight="800" noWrap>
-                                        Name: {row.name}
+                                        {row.name}
                                     </Typography>
                                     <Typography variant="h6">Guests: {row.guests}</Typography>
                                     <Typography variant="h6">Price: {row.price}</Typography>

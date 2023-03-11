@@ -200,7 +200,7 @@ const UpdateDialog = ({ open, setOpen, setUsers, updatedObj, setUpdatedObj }: an
             phone: updatedObj.phone,
             age: updatedObj.age,
             role: updatedObj.role,
-            password: updatedObj.password,
+            password: "",
         });
     }, [updatedObj.age, updatedObj.email, updatedObj.full_name, updatedObj.id, updatedObj.password, updatedObj.phone, updatedObj.role]);
 
@@ -211,9 +211,9 @@ const UpdateDialog = ({ open, setOpen, setUsers, updatedObj, setUpdatedObj }: an
                 <TextField autoFocus margin="dense" id="Full_name" label="Full Name" type="text" name="Full_name" fullWidth variant="standard" onChange={handleChange} value={values.full_name} />
                 <TextField margin="dense" id="email" label="Email" type="email" name="email" fullWidth variant="standard" onChange={handleChange} value={values.email} />
                 <TextField margin="dense" id="phone" label="Phone" type="number" name="phone" fullWidth variant="standard" onChange={handleChange} value={values.phone} />
-                <TextField margin="dense" id="age" label="age" type="number" name="age" fullWidth variant="standard" onChange={handleChange} value={values.age} />
-                <TextField margin="dense" id="role" label="role" type="text" name="role" fullWidth variant="standard" onChange={handleChange} value={values.role} />
-                <TextField margin="dense" id="password" label="password" type="password" name="password" fullWidth variant="standard" onChange={handleChange} value={values.password} />
+                <TextField margin="dense" id="age" label="Age" type="number" name="age" fullWidth variant="standard" onChange={handleChange} value={values.age} />
+                <TextField margin="dense" id="role" label="Role" type="text" name="role" fullWidth variant="standard" onChange={handleChange} value={values.role} />
+                <TextField margin="dense" id="password" label="Password" type="password" name="password" fullWidth variant="standard" onChange={handleChange} value={values.password} />
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setOpen({ ...open, update: false })}>Cancel</Button>

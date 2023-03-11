@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import api from "../../api";
 import { useAuth } from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import CustomizedSnackbars from "../../components/Snackbar";
 
 function Copyright(props: any) {
     return (
@@ -32,6 +33,8 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 const SignInSide = () => {
+    const [openSnackBar, setOpenSnackBar] = React.useState(false);
+    const [message, setMessage] = React.useState("");
     const navigate = useNavigate();
     const { login } = useAuth();
 
@@ -42,15 +45,19 @@ const SignInSide = () => {
             email: data.get("email"),
             password: data.get("password"),
         };
-        const result: any = await api.login(option);
-        if (result.status === 200) {
+        try {
+            const result: any = await api.login(option);
             login(result.data);
             navigate("/home");
+        } catch (error: any) {
+            setMessage(error.response.data);
+            setOpenSnackBar(true);
         }
     };
 
     return (
         <ThemeProvider theme={theme}>
+            <CustomizedSnackbars open={openSnackBar} onClose={() => setOpenSnackBar(false)} severity={"error"} message={message} />
             <Grid container component="main" sx={{ height: "100vh" }}>
                 <CssBaseline />
                 <Grid
