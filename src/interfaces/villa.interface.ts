@@ -12,4 +12,5 @@ export interface Villa {
     name: string;
     price: number;
     guests: number;
+    image?: string;
 }

@@ -2,7 +2,6 @@ import axios from "axios";
 import { Expense } from "../interfaces/expense.interface";
 import { Client, Client_RollPayment } from "../interfaces/rollPayment.interface";
 import { User } from "../interfaces/user.interface";
-import { Villa } from "../interfaces/villa.interface";
 
 const baseAPI = `http://localhost:5000/api/`;
 
@@ -22,8 +21,8 @@ export default {
     //#region Villa API
     getAllVillas: () => axios.get(`${baseAPI}villa`),
     getVillaById: (id: number) => axios.get(`${baseAPI}villa/${id}`),
-    createVilla: (values: any) => axios.post(`${baseAPI}villa`, values),
-    updateVilla: (values: Villa) => axios.put(`${baseAPI}villa/${values.id}`, values),
+    createVilla: (formdata: FormData) => axios.post(`${baseAPI}villa`, formdata),
+    updateVilla: (id: number, values: FormData) => axios.put(`${baseAPI}villa/${id}`, values),
     removeVilla: (id: number) => axios.delete(`${baseAPI}villa/${id}`),
     //#endregion
     //#region User API

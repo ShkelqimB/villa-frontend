@@ -1,5 +1,4 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -9,13 +8,14 @@ import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import api from "../../api";
 import { useAuth } from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import CustomizedSnackbars from "../../components/Snackbar";
+import backgorund from "../../assets/311735426_133267902833079_4389928807558517983_n.jpg";
+import Logo from "../../assets/logo.svg";
 
 function Copyright(props: any) {
     return (
@@ -66,7 +66,7 @@ const SignInSide = () => {
                     sm={4}
                     md={7}
                     sx={{
-                        backgroundImage: "url(https://source.unsplash.com/random)",
+                        backgroundImage: `url(${backgorund})`,
                         backgroundRepeat: "no-repeat",
                         backgroundColor: (t) => (t.palette.mode === "light" ? t.palette.grey[50] : t.palette.grey[900]),
                         backgroundSize: "cover",
@@ -83,12 +83,7 @@ const SignInSide = () => {
                             alignItems: "center",
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Sign in
-                        </Typography>
+                        <img src={Logo} alt="logo" style={{ width: 100, height: 100, margin: 10 }} />
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <TextField margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus />
                             <TextField margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" />

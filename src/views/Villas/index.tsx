@@ -38,14 +38,18 @@ const Villas = () => {
                                     borderRadius: 16,
                                     opacity: 1,
                                     marginTop: "2%",
-                                    // margin: "5% auto auto",
                                     padding: "1%",
                                     width: "100%",
                                 }}
                                 key={index}
                             >
                                 <Grid item xs={6} sm={6} md={2}>
-                                    <img src="https://source.unsplash.com/random" style={{ width: "100%", height: 100, border: "1px solid #707070", opacity: 1, borderRadius: "100%" }} />
+                                    <img
+                                        crossOrigin="anonymous"
+                                        src={`http://localhost:5000/uploads/${row.image}` || "https://source.unsplash.com/random"}
+                                        alt="test"
+                                        style={{ width: "100%", height: 100, border: "1px solid #707070", opacity: 1, borderRadius: "100%" }}
+                                    />
                                 </Grid>
                                 <Grid item xs={6} sm={6} md={8}>
                                     <Typography variant="h4" fontWeight="800" noWrap>
@@ -89,6 +93,7 @@ const Villas = () => {
 export default Villas;
 
 const CreateDialog = ({ open, setOpen, villas, setVillas }: any) => {
+    const [file, setFile] = useState<any>(null);
     const [values, setValues] = useState({
         name: "",
         price: +"",
@@ -103,8 +108,18 @@ const CreateDialog = ({ open, setOpen, villas, setVillas }: any) => {
         }));
     };
 
+    const handleFileInputChange = (event: any) => {
+        setFile(event.target.files[0]);
+    };
+
     const createVilla = async () => {
-        const { data } = await api.createVilla(values);
+        const formData = new FormData();
+        formData.append("image", file);
+        formData.append("name", values.name);
+        formData.append("guests", values.guests as any);
+        formData.append("price", values.price as any);
+
+        const { data } = await api.createVilla(formData);
         if (data) {
             setVillas((prev: Villa[]) => [...prev, data]);
             setOpen({ ...open, create: false });
@@ -116,6 +131,7 @@ const CreateDialog = ({ open, setOpen, villas, setVillas }: any) => {
         <Dialog open={open.create} onClose={() => setOpen({ ...open, create: false })}>
             <DialogTitle>Create Villa</DialogTitle>
             <DialogContent>
+                <input type="file" onChange={handleFileInputChange} />
                 <TextField autoFocus margin="dense" id="name" label="Name" type="name" name="name" fullWidth variant="standard" onChange={handleChange} value={values.name} />
                 <TextField margin="dense" id="price" label="price" type="price" name="price" fullWidth variant="standard" onChange={handleChange} value={values.price} />
                 <TextField margin="dense" id="guests" label="guests" type="guests" name="guests" fullWidth variant="standard" onChange={handleChange} value={values.guests} />
@@ -129,12 +145,17 @@ const CreateDialog = ({ open, setOpen, villas, setVillas }: any) => {
 };
 
 const UpdateDialog = ({ open, setOpen, setVillas, updatedObj, setUpdatedObj }: any) => {
+    const [file, setFile] = useState<any>(null);
     const [values, setValues] = useState({
         id: +"",
         name: "",
         price: +"",
         guests: +"",
     });
+
+    const handleFileInputChange = (event: any) => {
+        setFile(event.target.files[0]);
+    };
 
     const handleChange = (event: { persist: () => void; target: { name: any; value: any } }) => {
         event.persist();
@@ -146,9 +167,15 @@ const UpdateDialog = ({ open, setOpen, setVillas, updatedObj, setUpdatedObj }: a
     };
 
     const updateExp = async () => {
-        const updatedVilla = await api.updateVilla(values);
+        const formData = new FormData();
+        formData.append("image", file);
+        formData.append("name", values.name);
+        formData.append("guests", values.guests as any);
+        formData.append("price", values.price as any);
+
+        const updatedVilla = await api.updateVilla(values.id, formData);
         if (updatedVilla) {
-            setVillas((prev: Villa[]) => prev.map((item: Villa) => (item.id !== values.id ? item : values)));
+            setVillas((prev: Villa[]) => prev.map((item: Villa) => (item.id !== values.id ? item : { ...values, image: file.name })));
             setOpen({ ...open, update: false });
         } else {
             console.log("ERROR updating villa; ", updatedVilla);
@@ -168,6 +195,7 @@ const UpdateDialog = ({ open, setOpen, setVillas, updatedObj, setUpdatedObj }: a
         <Dialog open={open.update} onClose={() => setOpen({ ...open, update: false })}>
             <DialogTitle>Update Expense</DialogTitle>
             <DialogContent>
+                <input type="file" onChange={handleFileInputChange} />
                 <TextField autoFocus margin="dense" label="Name" type="text" fullWidth name="name" onChange={handleChange} value={values?.name} />
                 <TextField margin="dense" label="Guest" type="text" fullWidth name="guests" onChange={handleChange} value={values?.guests} />
                 <TextField margin="dense" label="Price" type="number" fullWidth name="price" onChange={handleChange} value={values?.price} />

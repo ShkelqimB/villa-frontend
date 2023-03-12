@@ -12,10 +12,11 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import routes from "../../routes/routes";
 import { useAuth } from "../../context/AuthProvider";
 import api from "../../api";
+import Logo from "../../assets/logo.svg";
 
 const Navbar = () => {
     const { logout } = useAuth();
@@ -29,10 +30,6 @@ const Navbar = () => {
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
-    };
-
-    const LogoRedirect = () => {
-        redirect("/home");
     };
 
     const LinkRedirect = (path: string) => {
@@ -51,7 +48,6 @@ const Navbar = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} onClick={LogoRedirect} />
                     <Typography
                         variant="h6"
                         noWrap
@@ -67,7 +63,7 @@ const Navbar = () => {
                             textDecoration: "none",
                         }}
                     >
-                        LOGO
+                        <img src={Logo} alt="logo" style={{ width: 60, height: 60, margin: 10 }} />
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                         <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
