@@ -47,8 +47,12 @@ const SignInSide = () => {
         };
         try {
             const result: any = await api.login(option);
+            console.log("🚀 ~ file: index.tsx:50 ~ handleSubmit ~ result:", result);
             login(result.data);
-            navigate("/home");
+            if (result.data.success) {
+                localStorage.setItem("jwt", result.data.token);
+                navigate("/home");
+            }
         } catch (error: any) {
             setMessage(error.response.data);
             setOpenSnackBar(true);

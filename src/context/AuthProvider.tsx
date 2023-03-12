@@ -27,7 +27,8 @@ function AuthProvider({ children }: AuthProviderProps) {
     useEffect(() => {
         // check for cookie on mount
         const cookie = getCookie("jwt");
-        if (cookie) {
+        const localStoragee = localStorage.getItem("jwt");
+        if (cookie || localStoragee) {
             setIsAuthenticated(true);
         }
     }, []);

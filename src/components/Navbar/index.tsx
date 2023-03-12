@@ -40,6 +40,7 @@ const Navbar = () => {
     const handleLogout = async () => {
         const isLoggedOut = await api.logout();
         if (isLoggedOut) {
+            localStorage.removeItem("jwt");
             logout();
         }
     };
