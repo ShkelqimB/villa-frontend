@@ -15,7 +15,6 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import routes from "../../routes/routes";
 import { useAuth } from "../../context/AuthProvider";
-import api from "../../api";
 import Logo from "../../assets/logo.svg";
 
 const Navbar = () => {
@@ -38,11 +37,8 @@ const Navbar = () => {
     };
 
     const handleLogout = async () => {
-        const isLoggedOut = await api.logout();
-        if (isLoggedOut) {
-            localStorage.removeItem("jwt");
-            logout();
-        }
+        localStorage.removeItem("jwt");
+        logout();
     };
 
     return (

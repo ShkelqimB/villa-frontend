@@ -10,9 +10,10 @@ import Footbar from "./Footbar";
 
 const Navigation = () => {
     const { isAuthenticated } = useAuth();
+    const getLocalStorage = localStorage.getItem("jwt");
     return (
         <>
-            {isAuthenticated ? (
+            {isAuthenticated || getLocalStorage ? (
                 <>
                     <Navbar />
                     <Routes>
@@ -20,7 +21,7 @@ const Navigation = () => {
                             const Element = prop.component;
                             return <Route path={prop.path} key={key} element={<Element />} />;
                         })}
-                        <Route path="/" element={<Navigate to="/home" replace />} />
+                        <Route path="/" element={<Navigate to={"/home"} replace />} />
                         {/* <Navigate from="/" to={"/home"} /> */}
                         {/* <Route path={"/"} element={routes.AdminRoutes[routes.AdminRoutes.length - 1].component} /> */}
                         <Route path="*" element={<NoMatch />} />
@@ -29,8 +30,8 @@ const Navigation = () => {
                 </>
             ) : (
                 <Routes>
-                    <Route path="/" element={<LandingScreen />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
+                    <Route path="/" element={<LandingScreen />} />
                 </Routes>
             )}
         </>
