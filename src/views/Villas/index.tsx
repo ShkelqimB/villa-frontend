@@ -46,7 +46,7 @@ const Villas = () => {
                                 <Grid item xs={6} sm={6} md={2}>
                                     <img
                                         crossOrigin="anonymous"
-                                        src={`http://localhost:5000/uploads/${row.image}` || "https://source.unsplash.com/random"}
+                                        src={`https://villa-backend-api.herokuapp.com/uploads/${row.image}` || "https://source.unsplash.com/random"}
                                         alt="test"
                                         style={{ width: "100%", height: 100, border: "1px solid #707070", opacity: 1, borderRadius: "100%" }}
                                     />
