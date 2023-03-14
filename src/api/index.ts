@@ -9,8 +9,8 @@ const baseAPI = `https://villa-backend-api.herokuapp.com/api/`;
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     //#region Auth
-    login: (values: any) => axios.post(`${baseAPI}authentication/login`, values, { withCredentials: true }),
-    logout: () => axios.post(`${baseAPI}authentication/logout`, null, { withCredentials: true }),
+    login: (values: any) => axios.post(`${baseAPI}authentication/login`, values),
+    logout: () => axios.post(`${baseAPI}authentication/logout`, null),
     //#endregion
     //#region Villa API
     getAllClients: () => axios.get(`${baseAPI}client`),
@@ -28,7 +28,7 @@ export default {
     //#endregion
     //#region User API
     getAllUsers: () => axios.get(`${baseAPI}user`),
-    getUserByToken: () => axios.get(`${baseAPI}user/me`, { withCredentials: true }),
+    getUserByToken: () => axios.get(`${baseAPI}user/me`),
     getUserById: (id: number) => axios.get(`${baseAPI}user/${id}`),
     createUser: (values: any) => axios.post(`${baseAPI}user`, values),
     updateUser: (values: User) => axios.put(`${baseAPI}user/${values.id}`, values),
