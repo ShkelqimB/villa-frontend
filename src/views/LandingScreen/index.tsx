@@ -47,7 +47,6 @@ const SignInSide = () => {
         };
         try {
             const result: any = await api.login(option);
-            console.log("🚀 ~ file: index.tsx:50 ~ handleSubmit ~ result:", result);
             login(result.data);
             if (result.data.success) {
                 localStorage.setItem("jwt", result.data.token);

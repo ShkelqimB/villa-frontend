@@ -34,7 +34,6 @@ function AuthProvider({ children }: AuthProviderProps) {
     }, []);
 
     const login = (user: User) => {
-        console.log("🚀 ~ file: AuthProvider.tsx:36 ~ login ~ user:", user);
         setUser(user);
         // set cookie and authentication status
         setIsAuthenticated(true);

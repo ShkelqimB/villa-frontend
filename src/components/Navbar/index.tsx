@@ -11,7 +11,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import routes from "../../routes/routes";
 import { useAuth } from "../../context/AuthProvider";
@@ -91,25 +90,9 @@ const Navbar = () => {
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: { xs: "flex", md: "none" },
-                            flexGrow: 1,
-                            fontFamily: "monospace",
-                            fontWeight: 700,
-                            letterSpacing: ".3rem",
-                            color: "inherit",
-                            textDecoration: "none",
-                        }}
-                    >
-                        LOGO
-                    </Typography>
+                    <Box sx={{ display: { xs: "flex", md: "none" }, marginTop: 1, marginBottom: 1, flexGrow: 1 }}>
+                        <img src={Logo} alt="logo" style={{ width: 70, height: 70 }} />
+                    </Box>
                     <>
                         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                             {routes.AdminLinks.map((res, index) => (

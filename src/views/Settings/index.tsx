@@ -24,7 +24,8 @@ export const Settings = () => {
     };
 
     const getUser = async () => {
-        const user = await api.getUserByToken();
+        const token = localStorage.getItem("jwt");
+        const user = await api.getUserByToken(token);
         setValues({
             id: user.data.id,
             email: user.data.email,
